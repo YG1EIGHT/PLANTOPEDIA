@@ -104,6 +104,19 @@ fun CameraScreen(
                                     classifier.classify(bitmap)
 
                                 prediction = result
+
+                                // Save successful prediction to history
+                                if (
+                                    result.label != "Unknown crop" &&
+                                    result.label != "Uncertain disease" &&
+                                    result.label != "Unable to confidently identify disease"
+                                ) {
+
+                                    ScanHistory.save(
+                                        context = context,
+                                        prediction = result
+                                    )
+                                }
                             }
 
                         } catch (e: Exception) {
