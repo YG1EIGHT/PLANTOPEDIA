@@ -1,0 +1,146 @@
+package com.example.plantopedia
+
+import android.content.Context
+import org.json.JSONArray
+import org.json.JSONObject
+
+data class ScanHistoryItem(
+    val crop: String,
+    val disease: String,
+    val confidence: Float,
+    val timestamp: Long
+)
+
+object ScanHistory {
+
+    private const val PREFS_NAME = "plantopedia_history"
+    private const val HISTORY_KEY = "scans"
+
+    fun save(
+        context: Context,
+        prediction: Prediction
+    ) {
+
+        val preferences =
+            context.getSharedPreferences(
+                PREFS_NAME,
+                Context.MODE_PRIVATE
+            )
+
+        val existing =
+            preferences.getString(
+                HISTORY_KEY,
+                "[]"
+            )
+
+        val array =
+            JSONArray(existing)
+
+        val item =
+            JSONObject().apply {
+
+                put(
+                    "crop",
+                    prediction.crop ?: "Unknown"
+                )
+
+                put(
+                    "disease",
+                    prediction.label
+                )
+
+                put(
+                    "confidence",
+                    prediction.confidence
+                )
+
+                put(
+                    "timestamp",
+                    System.currentTimeMillis()
+                )
+            }
+
+        // Newest scan goes first
+        array.put(item)
+
+        preferences.edit()
+            .putString(
+                HISTORY_KEY,
+                array.toString()
+            )
+            .apply()
+    }
+
+    fun getAll(
+        context: Context
+    ): List<ScanHistoryItem> {
+
+        val preferences =
+            context.getSharedPreferences(
+                PREFS_NAME,
+                Context.MODE_PRIVATE
+            )
+
+        val data =
+            preferences.getString(
+                HISTORY_KEY,
+                "[]"
+            )
+
+        val array =
+            JSONArray(data)
+
+        val result =
+            mutableListOf<ScanHistoryItem>()
+
+        for (i in 0 until array.length()) {
+
+            val item =
+                array.getJSONObject(i)
+
+            result.add(
+                ScanHistoryItem(
+                    crop =
+                        item.optString(
+                            "crop",
+                            "Unknown"
+                        ),
+
+                    disease =
+                        item.optString(
+                            "disease",
+                            "Unknown"
+                        ),
+
+                    confidence =
+                        item.optDouble(
+                            "confidence",
+                            0.0
+                        ).toFloat(),
+
+                    timestamp =
+                        item.optLong(
+                            "timestamp",
+                            0L
+                        )
+                )
+            )
+        }
+
+        return result
+    }
+
+    fun clear(
+        context: Context
+    ) {
+
+        context
+            .getSharedPreferences(
+                PREFS_NAME,
+                Context.MODE_PRIVATE
+            )
+            .edit()
+            .remove(HISTORY_KEY)
+            .apply()
+    }
+}
