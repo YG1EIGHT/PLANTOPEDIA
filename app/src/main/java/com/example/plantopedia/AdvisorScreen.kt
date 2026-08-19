@@ -254,7 +254,7 @@ fun AdvisorScreen() {
 
                                 Text(
                                     text =
-                                        "Plantopedia Advisor",
+                                        "AgroMedic Advisor",
 
                                     style =
                                         MaterialTheme.typography.titleLarge,
