@@ -19,7 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,8 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -37,12 +34,8 @@ fun HomeScreen(
     cameraPermissionGranted: Boolean,
     onScanClick: () -> Unit,
     onHistoryClick: () -> Unit,
-    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    val userProfile = UserManager.getUserProfile(context)
-    val userName = userProfile?.name ?: "Farmer"
 
     // ---------------------------------------------------------
     // COLORS
@@ -84,44 +77,32 @@ fun HomeScreen(
 
 
             // =================================================
-            // HEADER & USER PROFILE
+            // HEADER
             // =================================================
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.greeting_farmer, userName),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = darkGreen
-                    )
+            Text(
+                text = "Good morning, Farmer",
 
-                    Spacer(
-                        modifier = Modifier.height(6.dp)
-                    )
+                style = MaterialTheme.typography.headlineMedium,
 
-                    Text(
-                        text = stringResource(R.string.home_subtitle),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = grayText
-                    )
-                }
+                fontWeight = FontWeight.Bold,
 
-                OutlinedButton(
-                    onClick = onLogoutClick,
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.logout),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = darkGreen
-                    )
-                }
-            }
+                color = darkGreen
+            )
+
+
+            Spacer(
+                modifier = Modifier.height(6.dp)
+            )
+
+
+            Text(
+                text = "Check your plant, protect your crop.",
+
+                style = MaterialTheme.typography.bodyLarge,
+
+                color = grayText
+            )
 
 
             Spacer(
@@ -189,7 +170,7 @@ fun HomeScreen(
                     // -----------------------------------------
 
                     Text(
-                        text = stringResource(R.string.check_my_plant),
+                        text = "Check My Plant",
 
                         style =
                             MaterialTheme.typography.headlineSmall,
@@ -210,7 +191,8 @@ fun HomeScreen(
                     // -----------------------------------------
 
                     Text(
-                        text = stringResource(R.string.check_my_plant_desc),
+                        text =
+                            "Scan a leaf to identify a possible disease.",
 
                         style =
                             MaterialTheme.typography.bodyLarge,
@@ -249,7 +231,7 @@ fun HomeScreen(
             ) {
 
                 Text(
-                    text = stringResource(R.string.scan_crop_button),
+                    text = "📷  Scan Crop",
 
                     style =
                         MaterialTheme.typography.titleLarge,
@@ -272,9 +254,9 @@ fun HomeScreen(
 
                 text =
                     if (cameraPermissionGranted) {
-                        stringResource(R.string.camera_ready)
+                        "Camera ready ✓"
                     } else {
-                        stringResource(R.string.camera_permission_required)
+                        "Camera permission required"
                     },
 
                 style =
@@ -310,7 +292,7 @@ fun HomeScreen(
             ) {
 
                 Text(
-                    text = stringResource(R.string.recent_scans),
+                    text = "Recent Scans",
 
                     style =
                         MaterialTheme.typography.headlineSmall,
@@ -326,7 +308,7 @@ fun HomeScreen(
                 // ---------------------------------------------
 
                 Text(
-                    text = stringResource(R.string.view_all),
+                    text = "View All",
 
                     style =
                         MaterialTheme.typography.bodyLarge,
@@ -412,7 +394,7 @@ fun HomeScreen(
                     ) {
 
                         Text(
-                            text = stringResource(R.string.no_recent_scans),
+                            text = "No recent scans",
 
                             style =
                                 MaterialTheme.typography.titleMedium,
@@ -429,7 +411,8 @@ fun HomeScreen(
 
 
                         Text(
-                            text = stringResource(R.string.no_recent_scans_desc),
+                            text =
+                                "Your plant diagnoses will appear here.",
 
                             style =
                                 MaterialTheme.typography.bodyMedium,
