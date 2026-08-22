@@ -11,21 +11,30 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import coil.compose.rememberAsyncImagePainter
 import java.io.File
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 
+fun formatLabel(label: String): String {
+    return label
+        .replace("___", " → ")
+        .replace("_", " ")
+        .replace("(", " (")
+        .replace(")", ")")
+        .trim()
+}
 
 @Composable
 fun CameraScreen(
@@ -60,147 +69,85 @@ fun CameraScreen(
         }
     }
 
-    // ---------------------------------------------------------
-    // CAPTURED IMAGE SCREEN
-    // ---------------------------------------------------------
-
     if (capturedImageUri != null) {
-
         CapturedImageScreen(
             imageUri = capturedImageUri!!,
             prediction = prediction,
             isAnalyzing = isAnalyzing,
-
             onRetake = {
                 capturedImageUri = null
                 prediction = null
             },
-
             onAnalyze = {
-
                 if (!isAnalyzing) {
-
                     isAnalyzing = true
-
                     Thread {
-
                         try {
-
                             val inputStream =
-                                context.contentResolver.openInputStream(
-                                    capturedImageUri!!
-                                )
-
-                            val bitmap =
-                                BitmapFactory.decodeStream(
-                                    inputStream
-                                )
-
+                                context.contentResolver.openInputStream(capturedImageUri!!)
+                            val bitmap = BitmapFactory.decodeStream(inputStream)
                             inputStream?.close()
 
                             if (bitmap != null) {
-
-                                val result =
-                                    classifier.classify(bitmap)
-
+                                val result = classifier.classify(bitmap)
                                 prediction = result
 
-                                // Save successful prediction to history
                                 if (
                                     result.label != "Unknown crop" &&
                                     result.label != "Uncertain disease" &&
                                     result.label != "Unable to confidently identify disease"
                                 ) {
-
                                     ScanHistory.save(
                                         context = context,
                                         prediction = result
                                     )
                                 }
                             }
-
                         } catch (e: Exception) {
-
                             e.printStackTrace()
-
                         } finally {
-
                             isAnalyzing = false
                         }
-
                     }.start()
                 }
             }
         )
-
         return
     }
 
-    // ---------------------------------------------------------
-    // LIVE CAMERA
-    // ---------------------------------------------------------
-
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-
+    Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
-
             factory = { ctx: Context ->
-
-                val previewView =
-                    PreviewView(ctx)
-
-                val cameraProviderFuture =
-                    ProcessCameraProvider.getInstance(ctx)
+                val previewView = PreviewView(ctx)
+                val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
                 cameraProviderFuture.addListener({
-
-                    val cameraProvider =
-                        cameraProviderFuture.get()
-
-                    val preview =
-                        Preview.Builder()
-                            .build()
-
-                    val capture =
-                        ImageCapture.Builder()
-                            .build()
+                    val cameraProvider = cameraProviderFuture.get()
+                    val preview = Preview.Builder().build()
+                    val capture = ImageCapture.Builder().build()
 
                     imageCapture = capture
+                    preview.setSurfaceProvider(previewView.surfaceProvider)
 
-                    preview.setSurfaceProvider(
-                        previewView.surfaceProvider
-                    )
-
-                    val cameraSelector =
-                        CameraSelector.DEFAULT_BACK_CAMERA
+                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
                     try {
-
                         cameraProvider.unbindAll()
-
                         cameraProvider.bindToLifecycle(
                             lifecycleOwner,
                             cameraSelector,
                             preview,
                             capture
                         )
-
                     } catch (e: Exception) {
-
                         e.printStackTrace()
                     }
-
                 }, ContextCompat.getMainExecutor(ctx))
 
                 previewView
             },
-
             modifier = Modifier.fillMaxSize()
         )
-
-        // BACK BUTTON
 
         TextButton(
             onClick = onBack,
@@ -208,73 +155,42 @@ fun CameraScreen(
                 .align(Alignment.TopStart)
                 .padding(16.dp)
         ) {
-
-            Text("← Back")
+            Text(stringResource(id = R.string.camera_back))
         }
-
-        // CAPTURE BUTTON
 
         Button(
             onClick = {
+                val capture = imageCapture ?: return@Button
+                val photoFile = File(
+                    context.cacheDir,
+                    "crop_${System.currentTimeMillis()}.jpg"
+                )
 
-                val capture =
-                    imageCapture
-                        ?: return@Button
-
-                val photoFile =
-                    File(
-                        context.cacheDir,
-                        "crop_${System.currentTimeMillis()}.jpg"
-                    )
-
-                val outputOptions =
-                    ImageCapture
-                        .OutputFileOptions
-                        .Builder(photoFile)
-                        .build()
+                val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
                 capture.takePicture(
                     outputOptions,
                     ContextCompat.getMainExecutor(context),
-
-                    object :
-                        ImageCapture.OnImageSavedCallback {
-
-                        override fun onImageSaved(
-                            outputFileResults:
-                            ImageCapture.OutputFileResults
-                        ) {
-
-                            capturedImageUri =
-                                Uri.fromFile(photoFile)
+                    object : ImageCapture.OnImageSavedCallback {
+                        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                            capturedImageUri = Uri.fromFile(photoFile)
                         }
 
-                        override fun onError(
-                            exception:
-                            ImageCaptureException
-                        ) {
-
+                        override fun onError(exception: ImageCaptureException) {
                             exception.printStackTrace()
                         }
                     }
                 )
-
             },
-
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 40.dp)
         ) {
-
-            Text("📸 Capture")
+            Text(stringResource(id = R.string.camera_capture))
         }
     }
 }
 
-
-// ============================================================
-// CAPTURED IMAGE + RESULT
-// ============================================================
 @Composable
 fun CapturedImageScreen(
     imageUri: Uri,
@@ -283,244 +199,143 @@ fun CapturedImageScreen(
     onRetake: () -> Unit,
     onAnalyze: () -> Unit
 ) {
-
-    val diseaseInfo =
-        prediction?.let {
-            DiseaseDatabase.get(it.label)
-        }
+    val context = LocalContext.current
+    val diseaseInfo = prediction?.let {
+        DiseaseDatabase.get(it.label, context)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
-    )  {
-
+    ) {
         Text(
-            text = "Crop Analysis",
+            text = stringResource(id = R.string.crop_analysis),
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(
-            modifier = Modifier.height(12.dp)
-        )
+        Spacer(modifier = Modifier.height(12.dp))
 
         Image(
             painter = rememberAsyncImagePainter(imageUri),
-
-            contentDescription = "Captured crop",
-
+            contentDescription = stringResource(id = R.string.crop_analysis),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(260.dp),
-
             contentScale = ContentScale.Fit
         )
 
-        Spacer(
-            modifier = Modifier.height(12.dp)
-        )
+        Spacer(modifier = Modifier.height(12.dp))
 
         if (isAnalyzing) {
-
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 CircularProgressIndicator()
-
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-
-                Text("Analyzing crop...")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(stringResource(id = R.string.analyzing_crop))
             }
-
         } else if (prediction != null) {
-
-            val confidence =
-                prediction.confidence * 100
-
-            val isLowConfidence =
-                confidence < 40
+            val confidence = prediction.confidence * 100
+            val isLowConfidence = confidence < 40
 
             if (isLowConfidence) {
-
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 6.dp)
                 ) {
-
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-
+                    Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "⚠️ Low Confidence",
+                            text = stringResource(id = R.string.low_confidence_title),
                             style = MaterialTheme.typography.titleLarge
                         )
 
-                        Spacer(
-                            modifier = Modifier.height(8.dp)
-                        )
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                        Text(
-                            text =
-                                "The AI is not confident enough in this result."
-                        )
+                        Text(text = stringResource(id = R.string.low_confidence_desc))
 
-                        Spacer(
-                            modifier = Modifier.height(4.dp)
-                        )
+                        Spacer(modifier = Modifier.height(4.dp))
 
-                        Text(
-                            text =
-                                "Confidence: ${
-                                    String.format(
-                                        "%.1f",
-                                        confidence
-                                    )
-                                }%"
-                        )
+                        Text(text = stringResource(id = R.string.confidence_label, confidence))
 
-                        Spacer(
-                            modifier = Modifier.height(8.dp)
-                        )
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                        Text(
-                            text =
-                                "Please capture another clear image of the leaf with good lighting."
-                        )
+                        Text(text = stringResource(id = R.string.low_confidence_instruction))
                     }
                 }
-
             } else {
-
-                // =============================================
-                // DETECTION
-                // =============================================
-
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 6.dp)
                 ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "🌿 ${diseaseInfo?.crop ?: prediction.crop ?: formatLabel(prediction.label)}",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
 
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
+                        Spacer(modifier = Modifier.height(6.dp))
 
                         Text(
-                            text = "🌿 ${
-                                diseaseInfo?.crop
-                                    ?: formatLabel(prediction.label)
-                            }",
-                            style =
-                                MaterialTheme.typography.headlineSmall
+                            text = diseaseInfo?.disease ?: formatLabel(prediction.label),
+                            style = MaterialTheme.typography.titleLarge
                         )
 
-                        Spacer(
-                            modifier = Modifier.height(6.dp)
-                        )
+                        Spacer(modifier = Modifier.height(4.dp))
 
-                        Text(
-                            text =
-                                prediction.label
-                            ,
-                            style =
-                                MaterialTheme.typography.titleLarge
-                        )
-
-                        Spacer(
-                            modifier = Modifier.height(4.dp)
-                        )
-
-                        Text(
-                            text =
-                                "Confidence: ${
-                                    String.format(
-                                        "%.1f",
-                                        confidence
-                                    )
-                                }%"
-                        )
+                        Text(text = stringResource(id = R.string.confidence_label, confidence))
                     }
                 }
 
-                // =============================================
-                // DISEASE INFORMATION
-                // =============================================
-
                 if (diseaseInfo != null) {
-
                     DiseaseInfoCard(
-                        title = "🔍 Symptoms",
+                        title = stringResource(id = R.string.symptoms_title),
                         content = diseaseInfo.symptoms
                     )
 
                     DiseaseInfoCard(
-                        title = "💊 Treatment",
+                        title = stringResource(id = R.string.treatment_title),
                         content = diseaseInfo.treatment
                     )
 
                     DiseaseInfoCard(
-                        title = "🛡 Prevention",
+                        title = stringResource(id = R.string.prevention_title),
                         content = diseaseInfo.prevention
                     )
-
                 } else {
-
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 6.dp)
                     ) {
-
                         Text(
-                            text =
-                                "Disease information is not available for this prediction.",
-
-                            modifier =
-                                Modifier.padding(16.dp)
+                            text = stringResource(id = R.string.disease_info_not_available),
+                            modifier = Modifier.padding(16.dp)
                         )
                     }
                 }
             }
         }
 
-        Spacer(
-            modifier = Modifier.height(8.dp)
-        )
-
-        // =============================================
-        // BUTTONS
-        // =============================================
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-
-            horizontalArrangement =
-                Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-
-            OutlinedButton(
-                onClick = onRetake
-            ) {
-
-                Text("↻ Retake")
+            OutlinedButton(onClick = onRetake) {
+                Text(stringResource(id = R.string.retake))
             }
 
             Button(
                 onClick = onAnalyze,
-
-                enabled =
-                    !isAnalyzing &&
-                            prediction == null
+                enabled = !isAnalyzing && prediction == null
             ) {
-
-                Text("🔬 Analyze")
+                Text(stringResource(id = R.string.analyze))
             }
         }
     }
@@ -531,48 +346,23 @@ fun DiseaseInfoCard(
     title: String,
     content: String
 ) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 5.dp)
     ) {
-
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-
+        Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = title,
-                style =
-                    MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium
             )
 
-            Spacer(
-                modifier = Modifier.height(6.dp)
-            )
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = content,
-                style =
-                    MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
-}
-
-// ============================================================
-// LABEL FORMATTER
-// ============================================================
-
-fun formatLabel(
-    label: String
-): String {
-
-    return label
-        .replace("___", " → ")
-        .replace("_", " ")
-        .replace("(", " (")
-        .replace(")", ")")
-        .trim()
 }

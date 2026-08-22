@@ -30,25 +30,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
-// ============================================================
-// HISTORY SCREEN
-// ============================================================
-
 @Composable
 fun HistoryScreen() {
 
     val context = LocalContext.current
-
-    // ---------------------------------------------------------
-    // COLORS
-    // ---------------------------------------------------------
 
     val backgroundColor = Color(0xFFF8F4EC)
     val darkGreen = Color(0xFF174F3D)
@@ -56,26 +48,15 @@ fun HistoryScreen() {
     val softGreen = Color(0xFFE7F0E8)
     val grayText = Color(0xFF777777)
 
-    // ---------------------------------------------------------
-    // LOAD SAVED HISTORY
-    // ---------------------------------------------------------
-
     var historyItems by remember {
         mutableStateOf(
             ScanHistory.getAll(context)
         )
     }
 
-    // Reload history whenever this screen appears
     LaunchedEffect(Unit) {
-
-        historyItems =
-            ScanHistory.getAll(context)
+        historyItems = ScanHistory.getAll(context)
     }
-
-    // ---------------------------------------------------------
-    // SPLIT INTO TODAY / EARLIER
-    // ---------------------------------------------------------
 
     val todayItems =
         historyItems.filter {
@@ -92,7 +73,6 @@ fun HistoryScreen() {
     ) { innerPadding ->
 
         LazyColumn(
-
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
@@ -108,133 +88,67 @@ fun HistoryScreen() {
                 Arrangement.spacedBy(12.dp)
         ) {
 
-            // =================================================
-            // HEADER
-            // =================================================
-
             item {
-
                 Text(
-                    text = "Scan History",
-
-                    style =
-                        MaterialTheme.typography.headlineMedium,
-
-                    fontWeight =
-                        FontWeight.Bold,
-
+                    text = stringResource(id = R.string.scan_history_title),
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
                     color = darkGreen
                 )
 
-                Spacer(
-                    modifier = Modifier.height(6.dp)
-                )
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text =
-                        "Review your past plant diagnoses.",
-
-                    style =
-                        MaterialTheme.typography.bodyLarge,
-
+                    text = stringResource(id = R.string.scan_history_subtitle),
+                    style = MaterialTheme.typography.bodyLarge,
                     color = grayText
                 )
 
-                Spacer(
-                    modifier = Modifier.height(12.dp)
-                )
+                Spacer(modifier = Modifier.height(12.dp))
             }
-
-
-            // =================================================
-            // NO HISTORY
-            // =================================================
 
             if (historyItems.isEmpty()) {
 
                 item {
-
                     Surface(
-                        modifier =
-                            Modifier.fillMaxWidth(),
-
-                        shape =
-                            RoundedCornerShape(24.dp),
-
-                        color =
-                            Color.White,
-
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(24.dp),
+                        color = Color.White,
                         tonalElevation = 2.dp
                     ) {
-
                         Column(
-
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(28.dp),
-
-                            horizontalAlignment =
-                                Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-
                             Box(
-
                                 modifier = Modifier
                                     .size(90.dp)
-                                    .clip(
-                                        RoundedCornerShape(45.dp)
-                                    )
-                                    .background(
-                                        softGreen
-                                    ),
-
-                                contentAlignment =
-                                    Alignment.Center
+                                    .clip(RoundedCornerShape(45.dp))
+                                    .background(softGreen),
+                                contentAlignment = Alignment.Center
                             ) {
-
                                 Text(
                                     text = "🌿",
-
-                                    style =
-                                        MaterialTheme
-                                            .typography
-                                            .displaySmall
+                                    style = MaterialTheme.typography.displaySmall
                                 )
                             }
 
-                            Spacer(
-                                modifier =
-                                    Modifier.height(18.dp)
-                            )
+                            Spacer(modifier = Modifier.height(18.dp))
 
                             Text(
-                                text = "No scans yet",
-
-                                style =
-                                    MaterialTheme
-                                        .typography
-                                        .headlineSmall,
-
-                                fontWeight =
-                                    FontWeight.Bold,
-
+                                text = stringResource(id = R.string.no_scans_yet),
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.Bold,
                                 color = darkGreen
                             )
 
-                            Spacer(
-                                modifier =
-                                    Modifier.height(8.dp)
-                            )
+                            Spacer(modifier = Modifier.height(8.dp))
 
                             Text(
-                                text =
-                                    "Your plant diagnoses will appear here after you scan a crop.",
-
-                                style =
-                                    MaterialTheme
-                                        .typography
-                                        .bodyLarge,
-
+                                text = stringResource(id = R.string.no_scans_yet_desc),
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = grayText
                             )
                         }
@@ -243,36 +157,19 @@ fun HistoryScreen() {
 
             } else {
 
-                // =================================================
-                // TODAY
-                // =================================================
-
                 if (todayItems.isNotEmpty()) {
-
                     item {
-
-                        Spacer(
-                            modifier =
-                                Modifier.height(4.dp)
-                        )
+                        Spacer(modifier = Modifier.height(4.dp))
 
                         Text(
-                            text = "TODAY",
-
-                            style =
-                                MaterialTheme
-                                    .typography
-                                    .labelLarge,
-
-                            fontWeight =
-                                FontWeight.Bold,
-
+                            text = stringResource(id = R.string.history_today),
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold,
                             color = grayText
                         )
                     }
 
                     items(todayItems) { item ->
-
                         HistoryItem(
                             item = item,
                             darkGreen = darkGreen,
@@ -281,37 +178,19 @@ fun HistoryScreen() {
                     }
                 }
 
-
-                // =================================================
-                // EARLIER
-                // =================================================
-
                 if (earlierItems.isNotEmpty()) {
-
                     item {
-
-                        Spacer(
-                            modifier =
-                                Modifier.height(12.dp)
-                        )
+                        Spacer(modifier = Modifier.height(12.dp))
 
                         Text(
-                            text = "EARLIER",
-
-                            style =
-                                MaterialTheme
-                                    .typography
-                                    .labelLarge,
-
-                            fontWeight =
-                                FontWeight.Bold,
-
+                            text = stringResource(id = R.string.history_earlier),
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold,
                             color = grayText
                         )
                     }
 
                     items(earlierItems) { item ->
-
                         HistoryItem(
                             item = item,
                             darkGreen = darkGreen,
@@ -323,11 +202,6 @@ fun HistoryScreen() {
         }
     }
 }
-
-
-// ============================================================
-// HISTORY ITEM
-// ============================================================
 
 @Composable
 fun HistoryItem(
@@ -335,229 +209,92 @@ fun HistoryItem(
     darkGreen: Color,
     orange: Color
 ) {
+    val context = LocalContext.current
+    val emoji = getCropEmoji(item.crop)
+    val diseaseInfo = DiseaseDatabase.get(item.disease, context)
 
-    val emoji =
-        getCropEmoji(item.crop)
+    val displayCrop = diseaseInfo?.crop ?: item.crop
+    val displayDisease = diseaseInfo?.disease ?: formatLabel(item.disease)
 
     Surface(
-
-        modifier =
-            Modifier.fillMaxWidth(),
-
-        shape =
-            RoundedCornerShape(20.dp),
-
-        color =
-            Color.White,
-
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        color = Color.White,
         tonalElevation = 1.dp
     ) {
-
         Row(
-
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(14.dp),
-
-            verticalAlignment =
-                Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // -------------------------------------------------
-            // CROP ICON
-            // -------------------------------------------------
-
             Box(
-
                 modifier = Modifier
                     .size(64.dp)
-                    .clip(
-                        RoundedCornerShape(16.dp)
-                    )
-                    .background(
-                        Color(0xFFE7F0E8)
-                    ),
-
-                contentAlignment =
-                    Alignment.Center
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color(0xFFE7F0E8)),
+                contentAlignment = Alignment.Center
             ) {
-
                 Text(
                     text = emoji,
-
-                    style =
-                        MaterialTheme
-                            .typography
-                            .headlineMedium
+                    style = MaterialTheme.typography.headlineMedium
                 )
             }
 
+            Spacer(modifier = Modifier.size(14.dp))
 
-            Spacer(
-                modifier =
-                    Modifier.size(14.dp)
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = displayDisease,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = darkGreen
+                )
 
-
-            // -------------------------------------------------
-            // RESULT INFORMATION
-            // -------------------------------------------------
-
-            Column(
-                modifier =
-                    Modifier.weight(1f)
-            ) {
+                Spacer(modifier = Modifier.height(3.dp))
 
                 Text(
-
-                    text =
-                        formatLabel(item.disease),
-
-                    style =
-                        MaterialTheme
-                            .typography
-                            .titleMedium,
-
-                    fontWeight =
-                        FontWeight.Bold,
-
-                    color =
-                        darkGreen
+                    text = stringResource(
+                        id = R.string.history_confidence_format,
+                        displayCrop,
+                        item.confidence * 100
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
                 )
 
-                Spacer(
-                    modifier =
-                        Modifier.height(3.dp)
-                )
+                Spacer(modifier = Modifier.height(3.dp))
 
                 Text(
-
-                    text =
-                        "${item.crop} • ${
-                            String.format(
-                                "%.1f",
-                                item.confidence * 100
-                            )
-                        }% confidence",
-
-                    style =
-                        MaterialTheme
-                            .typography
-                            .bodyMedium,
-
-                    color =
-                        Color.Gray
-                )
-
-                Spacer(
-                    modifier =
-                        Modifier.height(3.dp)
-                )
-
-                Text(
-
-                    text =
-                        formatTime(item.timestamp),
-
-                    style =
-                        MaterialTheme
-                            .typography
-                            .bodySmall,
-
-                    color =
-                        orange
+                    text = formatTime(item.timestamp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = orange
                 )
             }
         }
     }
 }
 
-
-// ============================================================
-// TODAY CHECK
-// ============================================================
-
-fun isToday(
-    timestamp: Long
-): Boolean {
-
-    val dateFormat =
-        SimpleDateFormat(
-            "yyyyMMdd",
-            Locale.getDefault()
-        )
-
-    val today =
-        dateFormat.format(
-            Date()
-        )
-
-    val itemDate =
-        dateFormat.format(
-            Date(timestamp)
-        )
-
+fun isToday(timestamp: Long): Boolean {
+    val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+    val today = dateFormat.format(Date())
+    val itemDate = dateFormat.format(Date(timestamp))
     return today == itemDate
 }
 
-
-// ============================================================
-// FORMAT TIME
-// ============================================================
-
-fun formatTime(
-    timestamp: Long
-): String {
-
-    return SimpleDateFormat(
-        "dd MMM yyyy • hh:mm a",
-        Locale.getDefault()
-    ).format(
-        Date(timestamp)
-    )
+fun formatTime(timestamp: Long): String {
+    return SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale.getDefault()).format(Date(timestamp))
 }
 
-
-// ============================================================
-// CROP EMOJI
-// ============================================================
-
-fun getCropEmoji(
-    crop: String
-): String {
-
+fun getCropEmoji(crop: String): String {
     return when {
-
-        crop.contains(
-            "Tomato",
-            ignoreCase = true
-        ) -> "🍅"
-
-        crop.contains(
-            "Potato",
-            ignoreCase = true
-        ) -> "🥔"
-
-        crop.contains(
-            "Apple",
-            ignoreCase = true
-        ) -> "🍎"
-
-        crop.contains(
-            "Grape",
-            ignoreCase = true
-        ) -> "🍇"
-
-        crop.contains(
-            "Corn",
-            ignoreCase = true
-        ) -> "🌽"
-
-        crop.contains(
-            "Pepper",
-            ignoreCase = true
-        ) -> "🌶️"
-
+        crop.contains("Tomato", ignoreCase = true) -> "🍅"
+        crop.contains("Potato", ignoreCase = true) -> "🥔"
+        crop.contains("Apple", ignoreCase = true) -> "🍎"
+        crop.contains("Grape", ignoreCase = true) -> "🍇"
+        crop.contains("Corn", ignoreCase = true) -> "🌽"
+        crop.contains("Pepper", ignoreCase = true) -> "🌶️"
         else -> "🌿"
     }
 }
