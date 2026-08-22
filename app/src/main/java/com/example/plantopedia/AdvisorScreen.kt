@@ -1,5 +1,6 @@
 package com.example.plantopedia
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,12 +30,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 
 @Composable
 fun AdvisorScreen() {
+    val context = LocalContext.current
 
     // =========================================================
     // COLORS
@@ -70,70 +74,36 @@ fun AdvisorScreen() {
 
         return when {
 
-            text.contains("prevent") &&
-                    text.contains("disease") -> {
-
-                "To prevent plant diseases, keep good spacing between plants, " +
-                        "avoid watering the leaves unnecessarily, remove infected " +
-                        "plant material, keep the growing area clean, and provide " +
-                        "adequate sunlight and air circulation."
+            text.contains("prevent") || text.contains("रोग") || text.contains("प्रतिबंध") || text.contains("रोकथाम") || text.contains("बीमारी") -> {
+                context.getString(R.string.advice_prevent_disease)
             }
 
-            text.contains("yellow") &&
-                    text.contains("leaf") -> {
-
-                "Yellow leaves can have several causes, including overwatering, " +
-                        "underwatering, poor drainage, nutrient deficiency, or " +
-                        "natural aging. Check the soil moisture first and make " +
-                        "sure the plant has good drainage."
+            text.contains("yellow") || text.contains("पीली") || text.contains("पिवळी") || text.contains("पत्ते") || text.contains("पाने") -> {
+                context.getString(R.string.advice_yellow_leaves)
             }
 
-            text.contains("water") -> {
-
-                "Watering frequency depends on the crop, soil, temperature, " +
-                        "and weather. Check the soil before watering. Water when " +
-                        "the upper layer of soil begins to dry, and avoid keeping " +
-                        "the roots constantly waterlogged."
+            text.contains("water") || text.contains("पानी") || text.contains("पाणी") -> {
+                context.getString(R.string.advice_watering)
             }
 
-            text.contains("growth") ||
-                    text.contains("grow") -> {
-
-                "To improve plant growth, provide sufficient sunlight, suitable " +
-                        "soil, balanced nutrients, adequate water, and good air " +
-                        "circulation. Remove damaged leaves and monitor the plant " +
-                        "regularly for pests or disease."
+            text.contains("growth") || text.contains("grow") || text.contains("वृद्धि") || text.contains("वाढ") -> {
+                context.getString(R.string.advice_growth)
             }
 
             text.contains("disease") -> {
-
-                "Inspect the leaves, stems, and fruit for unusual spots, " +
-                        "discoloration, wilting, or fungal growth. Remove badly " +
-                        "affected plant material and improve air circulation. " +
-                        "A clear photo can also help identify the problem."
+                context.getString(R.string.advice_general_disease)
             }
 
-            text.contains("pest") ||
-                    text.contains("insect") -> {
-
-                "Inspect the underside of leaves and young shoots for insects " +
-                        "or damage. Remove visible pests when possible and keep " +
-                        "the plant healthy. Monitor the plant regularly so an " +
-                        "infestation can be detected early."
+            text.contains("pest") || text.contains("insect") || text.contains("कीट") || text.contains("कीटक") -> {
+                context.getString(R.string.advice_pests)
             }
 
             text.isEmpty() -> {
-
-                "Please enter a question about your plant or crop first."
+                context.getString(R.string.advice_empty_question)
             }
 
             else -> {
-
-                "For this question, start by checking the plant's leaves, " +
-                        "soil moisture, sunlight, and overall growing conditions. " +
-                        "If you are dealing with a specific disease or pest, " +
-                        "take a clear photo of the affected part of the plant " +
-                        "for further diagnosis."
+                context.getString(R.string.advice_default)
             }
         }
     }
@@ -169,7 +139,7 @@ fun AdvisorScreen() {
             item {
 
                 Text(
-                    text = "AI Plant Advisor",
+                    text = stringResource(R.string.ai_plant_advisor),
 
                     style =
                         MaterialTheme.typography.headlineMedium,
@@ -184,8 +154,7 @@ fun AdvisorScreen() {
                 )
 
                 Text(
-                    text =
-                        "Ask questions about your crops and plants.",
+                    text = stringResource(R.string.advisor_subtitle),
 
                     style =
                         MaterialTheme.typography.bodyLarge,
@@ -253,8 +222,7 @@ fun AdvisorScreen() {
                             Column {
 
                                 Text(
-                                    text =
-                                        "AgroMedic Advisor",
+                                    text = stringResource(R.string.advisor_assistant_name),
 
                                     style =
                                         MaterialTheme.typography.titleLarge,
@@ -271,8 +239,7 @@ fun AdvisorScreen() {
                                 )
 
                                 Text(
-                                    text =
-                                        "Your farming assistant",
+                                    text = stringResource(R.string.advisor_assistant_role),
 
                                     style =
                                         MaterialTheme.typography.bodyMedium,
@@ -288,9 +255,7 @@ fun AdvisorScreen() {
                         )
 
                         Text(
-                            text =
-                                "I can help you understand plant diseases, " +
-                                        "symptoms, treatments, and general crop care.",
+                            text = stringResource(R.string.advisor_intro_desc),
 
                             style =
                                 MaterialTheme.typography.bodyLarge,
@@ -314,7 +279,7 @@ fun AdvisorScreen() {
             item {
 
                 Text(
-                    text = "Suggested Questions",
+                    text = stringResource(R.string.suggested_questions),
 
                     style =
                         MaterialTheme.typography.headlineSmall,
@@ -338,9 +303,9 @@ fun AdvisorScreen() {
 
             item {
 
+                val qText = stringResource(R.string.q_prevent_diseases)
                 AdvisorQuestionCard(
-                    question =
-                        "How can I prevent plant diseases?",
+                    question = qText,
 
                     orange = orange,
 
@@ -348,8 +313,7 @@ fun AdvisorScreen() {
 
                     onClick = {
 
-                        question =
-                            "How can I prevent plant diseases?"
+                        question = qText
 
                         advice = null
                     }
@@ -363,9 +327,9 @@ fun AdvisorScreen() {
 
             item {
 
+                val qText = stringResource(R.string.q_yellow_leaves)
                 AdvisorQuestionCard(
-                    question =
-                        "What should I do if my leaves turn yellow?",
+                    question = qText,
 
                     orange = orange,
 
@@ -373,8 +337,7 @@ fun AdvisorScreen() {
 
                     onClick = {
 
-                        question =
-                            "What should I do if my leaves turn yellow?"
+                        question = qText
 
                         advice = null
                     }
@@ -388,9 +351,9 @@ fun AdvisorScreen() {
 
             item {
 
+                val qText = stringResource(R.string.q_water_crop)
                 AdvisorQuestionCard(
-                    question =
-                        "How often should I water my crop?",
+                    question = qText,
 
                     orange = orange,
 
@@ -398,8 +361,7 @@ fun AdvisorScreen() {
 
                     onClick = {
 
-                        question =
-                            "How often should I water my crop?"
+                        question = qText
 
                         advice = null
                     }
@@ -413,9 +375,9 @@ fun AdvisorScreen() {
 
             item {
 
+                val qText = stringResource(R.string.q_improve_growth)
                 AdvisorQuestionCard(
-                    question =
-                        "How do I improve plant growth?",
+                    question = qText,
 
                     orange = orange,
 
@@ -423,8 +385,7 @@ fun AdvisorScreen() {
 
                     onClick = {
 
-                        question =
-                            "How do I improve plant growth?"
+                        question = qText
 
                         advice = null
                     }
@@ -463,8 +424,7 @@ fun AdvisorScreen() {
                     ) {
 
                         Text(
-                            text =
-                                "Ask your own question",
+                            text = stringResource(R.string.ask_own_question),
 
                             style =
                                 MaterialTheme.typography.titleLarge,
@@ -482,8 +442,7 @@ fun AdvisorScreen() {
                         )
 
                         Text(
-                            text =
-                                "Type a question about your plant or crop to get advice.",
+                            text = stringResource(R.string.ask_own_question_desc),
 
                             style =
                                 MaterialTheme.typography.bodyMedium,
@@ -528,8 +487,7 @@ fun AdvisorScreen() {
                             placeholder = {
 
                                 Text(
-                                    text =
-                                        "Type a message..."
+                                    text = stringResource(R.string.type_message_placeholder)
                                 )
                             },
 
@@ -574,8 +532,7 @@ fun AdvisorScreen() {
                         ) {
 
                             Text(
-                                text =
-                                    "🌱  Get Advice",
+                                text = stringResource(R.string.get_advice_button),
 
                                 style =
                                     MaterialTheme.typography.titleMedium,
@@ -617,8 +574,7 @@ fun AdvisorScreen() {
                         ) {
 
                             Text(
-                                text =
-                                    "🌿 Advice",
+                                text = stringResource(R.string.advice_title),
 
                                 style =
                                     MaterialTheme.typography.titleLarge,
@@ -663,9 +619,7 @@ fun AdvisorScreen() {
                 )
 
                 Text(
-                    text =
-                        "💡 Advice is for general plant-care guidance. " +
-                                "For serious crop problems, consult a local agricultural expert.",
+                    text = stringResource(R.string.advisor_disclaimer),
 
                     style =
                         MaterialTheme.typography.bodyMedium,

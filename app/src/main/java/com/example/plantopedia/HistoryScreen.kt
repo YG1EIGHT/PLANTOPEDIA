@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
@@ -115,7 +116,7 @@ fun HistoryScreen() {
             item {
 
                 Text(
-                    text = "Scan History",
+                    text = stringResource(R.string.scan_history_title),
 
                     style =
                         MaterialTheme.typography.headlineMedium,
@@ -131,8 +132,7 @@ fun HistoryScreen() {
                 )
 
                 Text(
-                    text =
-                        "Review your past plant diagnoses.",
+                    text = stringResource(R.string.scan_history_subtitle),
 
                     style =
                         MaterialTheme.typography.bodyLarge,
@@ -208,7 +208,7 @@ fun HistoryScreen() {
                             )
 
                             Text(
-                                text = "No scans yet",
+                                text = stringResource(R.string.no_scans_yet),
 
                                 style =
                                     MaterialTheme
@@ -227,8 +227,7 @@ fun HistoryScreen() {
                             )
 
                             Text(
-                                text =
-                                    "Your plant diagnoses will appear here after you scan a crop.",
+                                text = stringResource(R.string.no_scans_yet_desc),
 
                                 style =
                                     MaterialTheme
@@ -257,7 +256,7 @@ fun HistoryScreen() {
                         )
 
                         Text(
-                            text = "TODAY",
+                            text = stringResource(R.string.header_today),
 
                             style =
                                 MaterialTheme
@@ -296,7 +295,7 @@ fun HistoryScreen() {
                         )
 
                         Text(
-                            text = "EARLIER",
+                            text = stringResource(R.string.header_earlier),
 
                             style =
                                 MaterialTheme
@@ -335,6 +334,11 @@ fun HistoryItem(
     darkGreen: Color,
     orange: Color
 ) {
+    val context = LocalContext.current
+    val diseaseInfo = DiseaseDatabase.get(context, item.disease)
+
+    val displayDiseaseName = diseaseInfo?.disease ?: formatLabel(item.disease)
+    val displayCropName = diseaseInfo?.crop ?: item.crop
 
     val emoji =
         getCropEmoji(item.crop)
@@ -410,8 +414,7 @@ fun HistoryItem(
 
                 Text(
 
-                    text =
-                        formatLabel(item.disease),
+                    text = displayDiseaseName,
 
                     style =
                         MaterialTheme
@@ -432,13 +435,14 @@ fun HistoryItem(
 
                 Text(
 
-                    text =
-                        "${item.crop} • ${
-                            String.format(
-                                "%.1f",
-                                item.confidence * 100
-                            )
-                        }% confidence",
+                    text = stringResource(
+                        R.string.history_crop_confidence,
+                        displayCropName,
+                        String.format(
+                            "%.1f",
+                            item.confidence * 100
+                        )
+                    ),
 
                     style =
                         MaterialTheme

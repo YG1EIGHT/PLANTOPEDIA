@@ -25,7 +25,7 @@ import coil.compose.rememberAsyncImagePainter
 import java.io.File
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun CameraScreen(
@@ -209,7 +209,7 @@ fun CameraScreen(
                 .padding(16.dp)
         ) {
 
-            Text("← Back")
+            Text(stringResource(R.string.back_button))
         }
 
         // CAPTURE BUTTON
@@ -266,7 +266,7 @@ fun CameraScreen(
                 .padding(bottom = 40.dp)
         ) {
 
-            Text("📸 Capture")
+            Text(stringResource(R.string.capture_button))
         }
     }
 }
@@ -283,10 +283,11 @@ fun CapturedImageScreen(
     onRetake: () -> Unit,
     onAnalyze: () -> Unit
 ) {
+    val context = LocalContext.current
 
     val diseaseInfo =
         prediction?.let {
-            DiseaseDatabase.get(it.label)
+            DiseaseDatabase.get(context, it.label)
         }
 
     Column(
@@ -297,7 +298,7 @@ fun CapturedImageScreen(
     )  {
 
         Text(
-            text = "Crop Analysis",
+            text = stringResource(R.string.crop_analysis_title),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -334,7 +335,7 @@ fun CapturedImageScreen(
                     modifier = Modifier.height(8.dp)
                 )
 
-                Text("Analyzing crop...")
+                Text(stringResource(R.string.analyzing_crop))
             }
 
         } else if (prediction != null) {
@@ -358,7 +359,7 @@ fun CapturedImageScreen(
                     ) {
 
                         Text(
-                            text = "⚠️ Low Confidence",
+                            text = stringResource(R.string.low_confidence_title),
                             style = MaterialTheme.typography.titleLarge
                         )
 
@@ -367,8 +368,7 @@ fun CapturedImageScreen(
                         )
 
                         Text(
-                            text =
-                                "The AI is not confident enough in this result."
+                            text = stringResource(R.string.low_confidence_desc)
                         )
 
                         Spacer(
@@ -376,13 +376,10 @@ fun CapturedImageScreen(
                         )
 
                         Text(
-                            text =
-                                "Confidence: ${
-                                    String.format(
-                                        "%.1f",
-                                        confidence
-                                    )
-                                }%"
+                            text = stringResource(
+                                R.string.confidence_label,
+                                String.format("%.1f", confidence)
+                            )
                         )
 
                         Spacer(
@@ -390,8 +387,7 @@ fun CapturedImageScreen(
                         )
 
                         Text(
-                            text =
-                                "Please capture another clear image of the leaf with good lighting."
+                            text = stringResource(R.string.low_confidence_instruction)
                         )
                     }
                 }
@@ -426,9 +422,7 @@ fun CapturedImageScreen(
                         )
 
                         Text(
-                            text =
-                                prediction.label
-                            ,
+                            text = diseaseInfo?.disease ?: prediction.label,
                             style =
                                 MaterialTheme.typography.titleLarge
                         )
@@ -438,13 +432,10 @@ fun CapturedImageScreen(
                         )
 
                         Text(
-                            text =
-                                "Confidence: ${
-                                    String.format(
-                                        "%.1f",
-                                        confidence
-                                    )
-                                }%"
+                            text = stringResource(
+                                R.string.confidence_label,
+                                String.format("%.1f", confidence)
+                            )
                         )
                     }
                 }
@@ -456,17 +447,17 @@ fun CapturedImageScreen(
                 if (diseaseInfo != null) {
 
                     DiseaseInfoCard(
-                        title = "🔍 Symptoms",
+                        title = stringResource(R.string.symptoms_title),
                         content = diseaseInfo.symptoms
                     )
 
                     DiseaseInfoCard(
-                        title = "💊 Treatment",
+                        title = stringResource(R.string.treatment_title),
                         content = diseaseInfo.treatment
                     )
 
                     DiseaseInfoCard(
-                        title = "🛡 Prevention",
+                        title = stringResource(R.string.prevention_title),
                         content = diseaseInfo.prevention
                     )
 
@@ -479,8 +470,7 @@ fun CapturedImageScreen(
                     ) {
 
                         Text(
-                            text =
-                                "Disease information is not available for this prediction.",
+                            text = stringResource(R.string.disease_info_unavailable),
 
                             modifier =
                                 Modifier.padding(16.dp)
@@ -509,7 +499,7 @@ fun CapturedImageScreen(
                 onClick = onRetake
             ) {
 
-                Text("↻ Retake")
+                Text(stringResource(R.string.retake_button))
             }
 
             Button(
@@ -520,7 +510,7 @@ fun CapturedImageScreen(
                             prediction == null
             ) {
 
-                Text("🔬 Analyze")
+                Text(stringResource(R.string.analyze_button))
             }
         }
     }

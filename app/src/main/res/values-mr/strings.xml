@@ -1,0 +1,211 @@
+<resources>
+    <string name="app_name">AgroShield</string>
+    <string name="registration_subtitle">तुमच्या पिकांचे संरक्षण करण्यासाठी खाते तयार करा.</string>
+    <string name="login_subtitle">तुमच्या AgroShield खात्यात साइन इन करा.</string>
+    <string name="full_name">पूर्ण नाव</string>
+    <string name="email_address">ईमेल पत्ता</string>
+    <string name="password">पासवर्ड</string>
+    <string name="select_language_title">तुमची आवडती भाषा निवडा</string>
+    <string name="register_button">नोंदणी करा</string>
+    <string name="login_button">लॉगिन करा</string>
+    <string name="logout">लॉगआउट</string>
+    <string name="already_have_account">आधीच खाते आहे का?</string>
+    <string name="dont_have_account">खाते नाही का?</string>
+    <string name="error_fill_all_fields">कृपया सर्व आवश्यक माहिती भरा.</string>
+    <string name="error_registration_failed">नोंदणी अयशस्वी झाली. कृपया पुन्हा प्रयत्न करा.</string>
+    <string name="error_invalid_credentials">अवैध ईमेल किंवा पासवर्ड.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">होम</string>
+    <string name="nav_scan">स्कॅन</string>
+    <string name="nav_history">इतिहास</string>
+    <string name="nav_advisor">सल्लागार</string>
+
+    <!-- Home Screen -->
+    <string name="greeting_farmer">शुभ सकाळ, %1$s</string>
+    <string name="home_subtitle">तुमची वनस्पती तपासा, तुमच्या पिकाचे रक्षण करा.</string>
+    <string name="check_my_plant">माझी वनस्पती तपासा</string>
+    <string name="check_my_plant_desc">संभाव्य रोग ओळखण्यासाठी पान स्कॅन करा.</string>
+    <string name="scan_crop_button">📷  पीक स्कॅन करा</string>
+    <string name="camera_ready">कॅमेरा तयार आहे ✓</string>
+    <string name="camera_permission_required">कॅमेरा परवानगी आवश्यक आहे</string>
+    <string name="recent_scans">नुकतेच केलेले स्कॅन</string>
+    <string name="view_all">सर्व पहा</string>
+    <string name="no_recent_scans">कोणतेही अलीकडील स्कॅन नाहीत</string>
+    <string name="no_recent_scans_desc">तुमच्या वनस्पतींचे निदान येथे दिसेल.</string>
+
+    <!-- Camera Screen -->
+    <string name="back_button">← मागे</string>
+    <string name="capture_button">📸 फोटो घ्या</string>
+    <string name="crop_analysis_title">पीक विश्लेषण</string>
+    <string name="analyzing_crop">पिकाचे विश्लेषण करत आहे...</string>
+    <string name="low_confidence_title">⚠️ कमी विश्वासार्हता</string>
+    <string name="low_confidence_desc">AI ला या निकालावर पूर्ण विश्वास नाही.</string>
+    <string name="confidence_label">विश्वासार्हता: %1$s%%</string>
+    <string name="history_crop_confidence">%1$s • %2$s%% विश्वासार्हता</string>
+    <string name="low_confidence_instruction">कृपया चांगल्या प्रकाशात पानाचे दुसरे स्पष्ट चित्र घ्या.</string>
+    <string name="symptoms_title">🔍 लक्षणे</string>
+    <string name="treatment_title">💊 उपचार</string>
+    <string name="prevention_title">🛡 प्रतिबंध</string>
+    <string name="disease_info_unavailable">या अंदाजासाठी रोगाची माहिती उपलब्ध नाही.</string>
+
+    <string name="retake_button">↻ पुन्हा घ्या</string>
+    <string name="analyze_button">🔬 विश्लेषण करा</string>
+
+    <!-- History Screen -->
+    <string name="scan_history_title">स्कॅन इतिहास</string>
+    <string name="scan_history_subtitle">तुमच्या मागील वनस्पती निदानांचे पुनरावलोकन करा.</string>
+    <string name="no_scans_yet">अद्याप कोणतेही स्कॅन नाहीत</string>
+    <string name="no_scans_yet_desc">पीक स्कॅन केल्यानंतर तुमचे वनस्पती निदान येथे दिसेल.</string>
+    <string name="header_today">आज</string>
+    <string name="header_earlier">पूर्वी</string>
+
+    <!-- Advisor Screen -->
+    <string name="ai_plant_advisor">AI वनस्पती सल्लागार</string>
+    <string name="advisor_subtitle">तुमच्या पिकांबद्दल आणि वनस्पतींबद्दल प्रश्न विचारा.</string>
+
+    <string name="advisor_assistant_name">AgroShield सल्लागार</string>
+    <string name="advisor_assistant_role">तुमचा शेती सहाय्यक</string>
+    <string name="advisor_intro_desc">मी तुम्हाला वनस्पतींचे रोग, लक्षणे, उपचार आणि सामान्य पीक काळजी समजून घेण्यास मदत करू शकतो.</string>
+    <string name="suggested_questions">सुचवलेले प्रश्न</string>
+    <string name="q_prevent_diseases">मी वनस्पतींचे रोग कसे रोखू शकतो?</string>
+    <string name="q_yellow_leaves">माझ्या वनस्पतीची पाने पिवळी पडल्यास मी काय करावे?</string>
+    <string name="q_water_crop">मी माझ्या पिकाला किती वेळा पाणी द्यावे?</string>
+    <string name="q_improve_growth">मी वनस्पतींची वाढ कशी सुधारू?</string>
+    <string name="ask_own_question">तुमचा स्वतःचा प्रश्न विचारा</string>
+    <string name="ask_own_question_desc">सल्ला मिळवण्यासाठी तुमच्या वनस्पती किंवा पिकाबद्दल प्रश्न टाइप करा.</string>
+    <string name="type_message_placeholder">संदेश टाइप करा...</string>
+    <string name="get_advice_button">🌱  सल्ला घ्या</string>
+    <string name="advice_title">🌿 सल्ला</string>
+    <string name="advisor_disclaimer">💡 सल्ला सामान्य काळजी मार्गदर्शनासाठी आहे. गंभीर पीक समस्यांसाठी, स्थानिक कृषी तज्ञांचा सल्ला घ्या.</string>
+
+    <!-- Advisor Responses -->
+    <string name="advice_empty_question">कृपया प्रथम तुमच्या वनस्पती किंवा पिकाबद्दल प्रश्न टाका.</string>
+    <string name="advice_prevent_disease">वनस्पतींचे रोग टाळण्यासाठी, रोपांमध्ये योग्य अंतर ठेवा, पानांवर अनावश्यक पाणी देणे टाळा, बाधित वनस्पती भाग काढून टाका, वाढणारे क्षेत्र स्वच्छ ठेवा आणि पुरेसा सूर्यप्रकाश व हवा खेळती ठेवा.</string>
+    <string name="advice_yellow_leaves">पाने पिवळी पडण्याची अनेक कारणे असू शकतात, ज्यामध्ये जास्त पाणी देणे, कमी पाणी देणे, पाण्याचा निचरा न होणे, पोषक तत्वांची कमतरता किंवा नैसर्गिक वय वाढणे समाविष्ट आहे. प्रथम मातीतील ओलावा तपासा आणि चांगला निचरा असल्याची खात्री करा.</string>
+    <string name="advice_watering">पाणी देण्याची वारंवारता पीक, माती, तापमान आणि हवामानावर अवलंबून असते. पाणी देण्यापूर्वी माती तपासा. मातीचा वरचा थर सुकू लागल्यावर पाणी द्या आणि मुळांमध्ये सतत पाणी साचू देणे टाळा.</string>
+    <string name="advice_growth">वनस्पतींची वाढ सुधारण्यासाठी पुरेसा सूर्यप्रकाश, योग्य माती, संतुलित पोषक तत्वे, पुरेसे पाणी आणि चांगली हवा पुरवा. खराब झालेली पाने काढून टाका आणि कीटक किंवा रोगांसाठी वनस्पतीचे नियमित निरीक्षण करा.</string>
+    <string name="advice_general_disease">असामान्य डाग, रंग बदलणे, सुकणे किंवा बुरशीच्या वाढीसाठी पाने, खोड आणि फळांची पाहणी करा. अत्यंत बाधित वनस्पती भाग काढून टाका आणि हवा खेळती ठेवा. स्पष्ट फोटो देखील समस्या ओळखण्यास मदत करू शकतो.</string>
+    <string name="advice_pests">कीटक किंवा नुकसानासाठी पानांच्या खालच्या बाजूची आणि कोवळ्या फांद्यांची पाहणी करा. शक्य असेल तेव्हा दिसणारे कीटक काढून टाका आणि वनस्पती निरोगी ठेवा. सुरुवातीच्या टप्प्यातच प्रादुर्भाव ओळखण्यासाठी नियमित निरीक्षण करा.</string>
+    <string name="advice_default">या प्रश्नासाठी, वनस्पतीची पाने, मातीचा ओलावा, सूर्यप्रकाश आणि वाढीच्या परिस्थितीची पाहणी करून सुरुवात करा. आपण विशिष्ट रोग किंवा कीटकांचा सामना करत असल्यास, पुढील निदानासाठी वनस्पतीचा बाधित भागाचा स्पष्ट फोटो घ्या.</string>
+
+    <!-- Disease Database - Crops -->
+    <string name="crop_apple">सफरचंद</string>
+    <string name="crop_corn">मका</string>
+    <string name="crop_grape">द्राक्ष</string>
+    <string name="crop_bell_pepper">ढोबळी मिरची</string>
+    <string name="crop_potato">बटाटा</string>
+    <string name="crop_tomato">टोमॅटो</string>
+
+    <!-- Disease Database - Disease Names -->
+    <string name="disease_apple_scab">ॲपल स्कॅब (सफरचंद पपडी रोग)</string>
+    <string name="disease_black_rot">ब्लॅक रॉट (काळा सड रोग)</string>
+    <string name="disease_cedar_apple_rust">सिडार ॲपल रस्ट</string>
+    <string name="disease_healthy">निरोगी</string>
+    <string name="disease_cercospora_leaf_spot">सर्कोस्पोरा लीफ स्पॉट / राखाडी लीफ स्पॉट</string>
+    <string name="disease_common_rust">कॉमन रस्ट (तांबेरा)</string>
+    <string name="disease_northern_leaf_blight">उत्तर पर्ण करपा रोग</string>
+    <string name="disease_esca">इस्का / ब्लॅक मिझल्स</string>
+    <string name="disease_leaf_blight">लीफ ब्लाइट (करपा)</string>
+    <string name="disease_bacterial_spot">जीवाणूजन्य ठिपके रोग</string>
+    <string name="disease_early_blight">लवकर येणारा करपा</string>
+    <string name="disease_late_blight">उशिरा येणारा करपा</string>
+    <string name="disease_leaf_mold">लीफ मोल्ड (पानावरील बुरशी)</string>
+    <string name="disease_septoria_leaf_spot">सेप्टोरिया लीफ स्पॉट</string>
+    <string name="disease_two_spotted_spider_mite">टू-स्पॉटेड स्पायडर माइट (लाल कोळी)</string>
+    <string name="disease_target_spot">टार्गेट स्पॉट</string>
+    <string name="disease_yellow_leaf_curl_virus">टोमॅटो पिवळा पर्णगुच्छ व्हायरस</string>
+    <string name="disease_mosaic_virus">टोमॅटो मोझॅक व्हायरस</string>
+
+    <!-- Disease Database - Descriptions -->
+    <string name="apple_scab_symptoms">पानांवर आणि फळांवर ऑलिव्ह-हिरवे ते तपकिरी डाग दिसू शकतात. तीव्र संसर्गामुळे पाने गळू शकतात आणि फळे खराब होऊ शकतात.</string>
+    <string name="apple_scab_treatment">संसर्ग झालेली गळलेली पाने आणि फळे काढून टाका. हवेचा प्रवाह सुधारित करा. आवश्यक असल्यास मान्यताप्राप्त बुरशीनाशकाचा वापर करा.</string>
+    <string name="apple_scab_prevention">गळलेली पाने काढून टाका, चांगल्या हवेच्या प्रवाहासाठी छाटणी करा आणि पाने दीर्घकाळ ओली राहणे टाळा.</string>
+
+    <string name="apple_black_rot_symptoms">पानांवर तपकिरी वर्तुळाकार डाग आणि फळांवर काळे घाव विकसित होऊ शकतात. फळे काळी आणि सुरकुतलेली होऊ शकतात.</string>
+    <string name="apple_black_rot_treatment">बाधित फळे आणि वाळलेले भाग काढून टाका. प्रभावित फांद्यांची छाटणी करा. स्थानिक शिफारसींनुसार बुरशीनाशक वापरा.</string>
+    <string name="apple_black_rot_prevention">बागेची स्वच्छता ठेवा आणि वाळलेली फळे व लाकूड काढून टाका.</string>
+
+    <string name="apple_cedar_rust_symptoms">पानांवर पिवळे-नारंगी डाग तयार होऊ शकतात. नंतर पानांच्या खालच्या बाजूला काळ्या संरचना दिसू शकतात.</string>
+    <string name="apple_cedar_rust_treatment">शक्य असल्यास गंभीरपणे बाधित भाग काढून टाका. मान्यताप्राप्त बुरशीनाशकाचा वापर करा.</string>
+    <string name="apple_cedar_rust_prevention">चांगला हवेचा प्रवाह ठेवा आणि रोगासाठी अनुकूल हवामानात वनस्पतींचे निरीक्षण करा.</string>
+
+    <string name="healthy_symptoms">चित्रात कोणत्याही प्रमुख रोगाची लक्षणे आढळली नाहीत.</string>
+
+    <string name="healthy_treatment">या चित्रावरून कोणत्याही रोगाच्या उपचारांची आवश्यकता नाही.</string>
+    <string name="healthy_prevention">नियमित निरीक्षण, संतुलित पोषण, योग्य सिंचन आणि स्वच्छता ठेवा.</string>
+
+    <string name="corn_gray_spot_symptoms">मक्याच्या पानांवर लांब राखाडी किंवा तपकिरी घाव विकसित होऊ शकतात.</string>
+    <string name="corn_gray_spot_treatment">पिकाचे उर्वरित अवशेष काढून टाका आणि रोगप्रतिकारक वाण वापरा. आवश्यकतेनुसार बुरशीनाशकाचा वापर करा.</string>
+    <string name="corn_gray_spot_prevention">पिकांची आलटपालट, प्रतिकारक वाण आणि शेताची स्वच्छता ठेवा.</string>
+
+    <string name="corn_rust_symptoms">मक्याच्या पानांवर लहान तांबूस-तपकिरी रंगाचे पुरळ विकसित होतात.</string>
+    <string name="corn_rust_treatment">प्रतिकारक वाण वापरा आणि रोगाच्या वाढीचे निरीक्षण करा.</string>
+
+    <string name="corn_rust_prevention">प्रतिकारक संकरित वाण वापरा आणि चांगले पीक व्यवस्थापन ठेवा.</string>
+
+    <string name="corn_blight_symptoms">मक्याच्या पानांवर मोठे लांबट राखाडी-हिरवे ते तपकिरी घाव तयार होऊ शकतात.</string>
+    <string name="corn_blight_treatment">प्रतिकारक वाण वापरा आणि पीक अवशेषांचे व्यवस्थापन करा.</string>
+    <string name="corn_blight_prevention">पिक फेरपालट करा, प्रतिकारक वाण वापरा आणि शेताची स्वच्छता ठेवा.</string>
+
+    <string name="grape_black_rot_symptoms">पानांवर तपकिरी वर्तुळाकार डाग येऊ शकतात, त्यानंतर फळे काळी आणि सुकलेली होतात.</string>
+    <string name="grape_black_rot_treatment">बाधित फळे आणि वनस्पतींचे अवशेष काढून टाका. हवेचा खेळता प्रवाह सुधारा.</string>
+    <string name="grape_black_rot_prevention">द्राक्षबाग स्वच्छ ठेवा आणि चांगले कॅनोपी व्यवस्थापन करा.</string>
+
+    <string name="grape_esca_symptoms">पानांवर वैशिष्ट्यपूर्ण रंग बदलू शकतो, तर फळांवर काळे डाग पडू शकतात.</string>
+    <string name="grape_esca_treatment">गंभीरपणे बाधित वनस्पती भाग काढून टाका. छाटणीच्या जखमांचे व्यवस्थापन करा.</string>
+    <string name="grape_esca_prevention">स्वच्छ लागवड साहित्य आणि चांगल्या छाटणी पद्धती वापरा.</string>
+
+    <string name="grape_leaf_blight_symptoms">पानावरील काळे डाग मोठे होऊ शकतात आणि बाधित पानांचे नुकसान करू शकतात.</string>
+    <string name="grape_leaf_blight_treatment">बाधित वनस्पतींचे अवशेष काढून टाका आणि हवेचा प्रवाह सुधारा.</string>
+    <string name="grape_leaf_blight_prevention">हवेचा खेळता प्रवाह ठेवा आणि संसर्गजन्य अवशेष काढून टाका.</string>
+
+    <string name="pepper_bacterial_spot_symptoms">पानांवर आणि फळांवर लहान काळे किंवा पाण्यासारखे डाग दिसू शकतात.</string>
+    <string name="pepper_bacterial_spot_treatment">तीव्र संसर्ग झालेला भाग काढून टाका आणि ओल्या वनस्पतींसोबत काम करणे टाळा.</string>
+    <string name="pepper_bacterial_spot_prevention">स्वच्छ बियाणे, स्वच्छता, पीक फेरपालट वापरा आणि वरून पाणी देणे टाळा.</string>
+
+    <string name="potato_early_blight_symptoms">गडद तपकिरी पानांचे डाग सहसा वर्तुळाकार रिंग पॅटर्नसह विकसित होतात. जुनी पाने आधी बाधित होतात.</string>
+    <string name="potato_early_blight_treatment">संसर्गजन्य अवशेष काढून टाका आणि वनस्पतींची ताकद राखा.</string>
+    <string name="potato_early_blight_prevention">पीक फेरपालट, शेत स्वच्छता करा आणि पाने जास्त वेळ ओली राहू देऊ नका.</string>
+
+    <string name="potato_late_blight_symptoms">पानांवर गडद अनियमित घाव वेगाने विकसित होऊ शकतात. दमट हवामानात पांढरी बुरशी दिसू शकते.</string>
+    <string name="potato_late_blight_treatment">गंभीरपणे बाधित भाग काढून टाका आणि त्वरित व्यवस्थापन करा.</string>
+    <string name="potato_late_blight_prevention">निरोगी लागवड साहित्य, प्रतिकारक वाण आणि शेत स्वच्छता वापरा.</string>
+
+    <string name="tomato_bacterial_spot_symptoms">पाने, खोड आणि फळांवर लहान काळे डाग पडू शकतात. तीव्र संसर्गामुळे पाने गळू शकतात.</string>
+    <string name="tomato_bacterial_spot_treatment">गंभीर बाधित भाग काढून टाका आणि ओल्या वनस्पतींना स्पर्श करणे टाळा.</string>
+
+    <string name="tomato_bacterial_spot_prevention">स्वच्छ बियाणे वापरा, स्वच्छता ठेवा आणि वरून सिंचन टाळा.</string>
+
+    <string name="tomato_early_blight_symptoms">जुन्या पानांवर सहसा वर्तुळाकार रिंग्स असलेले गडद तपकिरी डाग दिसतात.</string>
+    <string name="tomato_early_blight_treatment">बाधित पाने काढून टाका आणि वनस्पती निरोगी ठेवा.</string>
+    <string name="tomato_early_blight_prevention">पीक फेरपालट, स्वच्छता आणि रोपांमध्ये योग्य अंतर ठेवा.</string>
+
+    <string name="tomato_late_blight_symptoms">पानांवर आणि खोडांवर गडद, अनियमित घाव दिसू शकतात. दमट परिस्थितीत बुरशी वाढू शकते.</string>
+    <string name="tomato_late_blight_treatment">गंभीरपणे बाधित वनस्पती त्वरित काढून टाका आणि बुरशीनाशकाचा वापर करा.</string>
+    <string name="tomato_late_blight_prevention">निरोगी लागवड साहित्य वापरा, हवेचा प्रवाह सुधारा आणि संसर्गजन्य कचरा काढून टाका.</string>
+
+    <string name="tomato_leaf_mold_symptoms">पानाच्या वरच्या पृष्ठभागावर पिवळसर डाग आणि खालच्या बाजूला राखाडी बुरशी दिसू शकते.</string>
+    <string name="tomato_leaf_mold_treatment">हवेचा खेळता प्रवाह सुधारा आणि दमटपणा कमी करा. बाधित पाने काढून टाका.</string>
+    <string name="tomato_leaf_mold_prevention">ग्रीनहाऊसमध्ये हवेचा प्रवाह सुधारा आणि पानांवरील ओलावा कमी करा.</string>
+
+    <string name="tomato_septoria_symptoms">लहान वर्तुळाकार डागांना सहसा काळ्या कडा आणि फिकट केंद्र असतात. अनेक डागांमुळे पाने पिवळी पडतात.</string>
+    <string name="tomato_septoria_treatment">बाधित पाने आणि वनस्पतींचे अवशेष काढून टाका. हवेचा प्रवाह सुधारा.</string>
+    <string name="tomato_septoria_prevention">पीक फेरपालट, स्वच्छता आणि योग्य अंतर वापरा.</string>
+
+    <string name="tomato_spider_mites_symptoms">पानांवर पिवळे डाग आणि जाळे दिसू शकतात. तीव्र प्रादुर्भावामुळे पाने सुकू शकतात.</string>
+    <string name="tomato_spider_mites_treatment">पानांच्या खालच्या बाजूची पाहणी करा. मान्यताप्राप्त कीटक-व्यवस्थापन पद्धती वापरा.</string>
+    <string name="tomato_spider_mites_prevention">वनस्पतींचे नियमित निरीक्षण करा आणि वनस्पतींवरील ताण कमी करा.</string>
+
+    <string name="tomato_target_spot_symptoms">पानांवर आणि फळांवर गोल तपकिरी घाव विकसित होऊ शकतात.</string>
+    <string name="tomato_target_spot_treatment">संसर्गजन्य अवशेष काढून टाका आणि हवेचा प्रवाह सुधारा.</string>
+    <string name="tomato_target_spot_prevention">स्वच्छता, अंतर, पीक फेरपालट आणि चांगला हवेचा प्रवाह ठेवा.</string>
+
+    <string name="tomato_curl_virus_symptoms">पाने वरच्या बाजूला वळू शकतात, पिवळी पडू शकतात आणि रोपाची वाढ खुंटू शकते.</string>
+    <string name="tomato_curl_virus_treatment">संसर्ग झालेल्या रोपावर कोणताही उपचार नाही. बाधित रोपे काढून टाका आणि पांढऱ्या माशीचे नियंत्रण करा.</string>
+    <string name="tomato_curl_virus_prevention">निरोगी लागवड साहित्य वापरा आणि पांढऱ्या माशांचे व्यवस्थापन करा.</string>
+
+    <string name="tomato_mosaic_virus_symptoms">पानांवर फिकट आणि गडद हिरवे डाग दिसू शकतात आणि रोपाची वाढ मंदावू शकते.</string>
+    <string name="tomato_mosaic_virus_treatment">व्हायरसग्रस्त रोपावर कोणताही कीटकनाशक उपचार नाही. बाधित रोपे काढून टाका.</string>
+    <string name="tomato_mosaic_virus_prevention">स्वच्छ बियाणे व रोपे वापरा आणि अवजारे जंतूमुक्त ठेवा.</string>
+</resources>
