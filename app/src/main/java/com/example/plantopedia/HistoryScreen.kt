@@ -435,14 +435,14 @@ fun HistoryItem(
 
                 Text(
 
-                    text =
-                        "$displayCropName • " + stringResource(
-                            R.string.confidence_value,
-                            String.format(
-                                "%.1f",
-                                item.confidence * 100
-                            )
-                        ),
+                    text = stringResource(
+                        R.string.history_crop_confidence,
+                        displayCropName,
+                        String.format(
+                            "%.1f",
+                            item.confidence * 100
+                        )
+                    ),
 
                     style =
                         MaterialTheme

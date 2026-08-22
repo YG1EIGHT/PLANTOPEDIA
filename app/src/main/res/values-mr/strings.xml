@@ -42,7 +42,7 @@
     <string name="low_confidence_title">⚠️ कमी विश्वासार्हता</string>
     <string name="low_confidence_desc">AI ला या निकालावर पूर्ण विश्वास नाही.</string>
     <string name="confidence_label">विश्वासार्हता: %1$s%%</string>
-    <string name="confidence_value">%1$s%% विश्वासार्हता</string>
+    <string name="history_crop_confidence">%1$s • %2$s%% विश्वासार्हता</string>
     <string name="low_confidence_instruction">कृपया चांगल्या प्रकाशात पानाचे दुसरे स्पष्ट चित्र घ्या.</string>
     <string name="symptoms_title">🔍 लक्षणे</string>
     <string name="treatment_title">💊 उपचार</string>

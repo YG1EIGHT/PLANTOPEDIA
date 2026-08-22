@@ -287,7 +287,7 @@ fun CapturedImageScreen(
 
     val diseaseInfo =
         prediction?.let {
-            DiseaseDatabase.get(context, it.label) ?: DiseaseDatabase.get(it.label)
+            DiseaseDatabase.get(context, it.label)
         }
 
     Column(

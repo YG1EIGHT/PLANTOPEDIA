@@ -42,7 +42,7 @@
     <string name="low_confidence_title">⚠️ कम विश्वसनीयता</string>
     <string name="low_confidence_desc">AI इस परिणाम के प्रति पर्याप्त आश्वस्त नहीं है।</string>
     <string name="confidence_label">विश्वसनीयता: %1$s%%</string>
-    <string name="confidence_value">%1$s%% विश्वसनीयता</string>
+    <string name="history_crop_confidence">%1$s • %2$s%% विश्वसनीयता</string>
     <string name="low_confidence_instruction">कृपया अच्छी रोशनी में पत्ती की एक और स्पष्ट तस्वीर लें।</string>
     <string name="symptoms_title">🔍 लक्षण</string>
     <string name="treatment_title">💊 उपचार</string>

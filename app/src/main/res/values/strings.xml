@@ -42,7 +42,7 @@
     <string name="low_confidence_title">⚠️ Low Confidence</string>
     <string name="low_confidence_desc">The AI is not confident enough in this result.</string>
     <string name="confidence_label">Confidence: %1$s%%</string>
-    <string name="confidence_value">%1$s%% confidence</string>
+    <string name="history_crop_confidence">%1$s • %2$s%% confidence</string>
     <string name="low_confidence_instruction">Please capture another clear image of the leaf with good lighting.</string>
     <string name="symptoms_title">🔍 Symptoms</string>
     <string name="treatment_title">💊 Treatment</string>

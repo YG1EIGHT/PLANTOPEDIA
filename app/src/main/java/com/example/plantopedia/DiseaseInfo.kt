@@ -278,15 +278,4 @@ object DiseaseDatabase {
             prevention = context.getString(res.preventionResId)
         )
     }
-
-    fun get(label: String): DiseaseInfo? {
-        val res = dataRes[label] ?: return null
-        return DiseaseInfo(
-            crop = res.cropResId.toString(),
-            disease = res.diseaseResId.toString(),
-            symptoms = res.symptomsResId.toString(),
-            treatment = res.treatmentResId.toString(),
-            prevention = res.preventionResId.toString()
-        )
-    }
 }
