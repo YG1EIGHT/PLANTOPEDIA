@@ -1,0 +1,102 @@
+<resources>
+    <string name="app_name">अ‍ॅग्रोमेडिक</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">होम</string>
+    <string name="nav_scan">स्कॅन</string>
+    <string name="nav_history">इतिहास</string>
+    <string name="nav_advisor">सल्लागार</string>
+
+    <!-- Auth / Registration / Login -->
+    <string name="login_title">पुन्हा स्वागत आहे</string>
+    <string name="login_subtitle">तुमच्या अ‍ॅग्रोमेडिक खात्यात लॉग इन करा</string>
+    <string name="register_title">खाते तयार करा</string>
+    <string name="register_subtitle">तुमच्या पिकांचे संरक्षण करण्यासाठी नोंदणी करा</string>
+    <string name="username">वापरकर्ता नाव</string>
+    <string name="mobile_number">मोबाईल क्रमांक</string>
+    <string name="password">पासवर्ड</string>
+    <string name="preferred_language">पसंतीची भाषा</string>
+    <string name="select_language">भाषा निवडा</string>
+    <string name="register_button">नोंदणी करा</string>
+    <string name="login_button">लॉगिन</string>
+    <string name="continue_as_guest">पाहुणे (Guest) म्हणून सुरू ठेवा</string>
+    <string name="dont_have_account">खाते नाही? नोंदणी करा</string>
+    <string name="already_have_account">आधीपासून खाते आहे? लॉगिन करा</string>
+    <string name="logout">लॉगआउट</string>
+    <string name="show_password">पासवर्ड दाखवा</string>
+    <string name="hide_password">पासवर्ड लपवा</string>
+
+    <!-- Validation / Error Messages -->
+    <string name="error_username_required">वापरकर्ता नाव आवश्यक आहे</string>
+    <string name="error_invalid_mobile">वैध १०-अंकी भारतीय मोबाईल क्रमांक प्रविष्ट करा</string>
+    <string name="error_password_required">पासवर्ड आवश्यक आहे</string>
+    <string name="error_invalid_credentials">अवैध मोबाईल क्रमांक किंवा पासवर्ड</string>
+    <string name="error_user_exists">मोबाईल क्रमांक आधीच नोंदणीकृत आहे</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_farmer">शुभ सकाळ, %1$s</string>
+    <string name="guest_user">पाहुणे शेतकरी</string>
+    <string name="home_subtitle">तुमचे रोप तपासा, तुमचे पीक वाचवा.</string>
+    <string name="check_my_plant">माझे रोप तपासा</string>
+    <string name="check_plant_desc">संभाव्य रोगाची ओळख पटवण्यासाठी पान स्कॅन करा.</string>
+    <string name="scan_crop">पीक स्कॅन करा</string>
+    <string name="camera_ready">कॅमेरा तयार आहे ✓</string>
+    <string name="camera_permission_required">कॅमेरा परवानगी आवश्यक आहे</string>
+    <string name="recent_scans">अलीकडील स्कॅन</string>
+    <string name="view_all">सर्व पहा</string>
+    <string name="no_recent_scans">कोणतेही अलीकडील स्कॅन नाहीत</string>
+    <string name="no_recent_scans_desc">तुमच्या वनस्पतींचे निदान येथे दिसेल.</string>
+
+    <!-- Camera / Analysis Screen -->
+    <string name="camera_back">← मागे</string>
+    <string name="camera_capture">📸 फोटो घ्या</string>
+    <string name="crop_analysis">पीक विश्लेषण</string>
+    <string name="analyzing_crop">पिकाचे विश्लेषण करत आहे...</string>
+    <string name="low_confidence_title">⚠️ कमी विश्वासार्हता</string>
+    <string name="low_confidence_desc">एआय ला या निकालावर पुरेसा विश्वास नाही.</string>
+    <string name="confidence_label">विश्वासार्हता: %1$.1f%%</string>
+    <string name="low_confidence_instruction">कृपया चांगल्या प्रकाशात पानावरील आणखी एक स्पष्ट फोटो घ्या.</string>
+    <string name="retake">↻ पुन्हा घ्या</string>
+    <string name="analyze">🔬 विश्लेषण करा</string>
+    <string name="disease_info_not_available">या अंदाजासाठी रोगाची माहिती उपलब्ध नाही.</string>
+    <string name="symptoms_title">🔍 लक्षणे</string>
+    <string name="treatment_title">💊 उपचार</string>
+    <string name="prevention_title">🛡 प्रतिबंध</string>
+
+    <!-- History Screen -->
+    <string name="scan_history_title">स्कॅन इतिहास</string>
+    <string name="scan_history_subtitle">तुमच्या मागील वनस्पती निदानांचे पुनरावलोकन करा.</string>
+    <string name="no_scans_yet">अद्याप कोणतेही स्कॅन नाहीत</string>
+    <string name="no_scans_yet_desc">पीक स्कॅन केल्यानंतर तुमच्या वनस्पतींचे निदान येथे दिसेल.</string>
+    <string name="history_today">आज</string>
+    <string name="history_earlier">पूर्वी</string>
+    <string name="history_confidence_format">%1$s • %2$.1f%% विश्वासार्हता</string>
+
+    <!-- AI Advisor Screen -->
+    <string name="advisor_title">एआय पीक सल्लागार</string>
+    <string name="advisor_subtitle">तुमच्या पिकांबद्दल आणि वनस्पतींबद्दल प्रश्न विचारा.</string>
+    <string name="advisor_card_title">अ‍ॅग्रोमेडिक सल्लागार</string>
+    <string name="advisor_card_subtitle">तुमचा कृषी सहाय्यक</string>
+    <string name="advisor_intro">मी तुम्हाला वनस्पतींचे रोग, लक्षणे, उपचार आणि सामान्य पीक काळजी समजून घेण्यास मदत करू शकतो.</string>
+    <string name="suggested_questions">सुचवलेले प्रश्न</string>
+    <string name="question_1">मी वनस्पतींचे रोग कसे रोखू शकतो?</string>
+    <string name="question_2">माझी पाने पिवळी पडली तर मी काय करावे?</string>
+    <string name="question_3">मी माझ्या पिकाला किती वेळा पाणी द्यावे?</string>
+    <string name="question_4">मी रोपांची वाढ कशी सुधारावी?</string>
+    <string name="ask_own_question">तुमचा स्वतःचा प्रश्न विचारा</string>
+    <string name="ask_question_desc">सल्ला मिळवण्यासाठी तुमच्या रोपाबद्दल किंवा पिकाबद्दल प्रश्न टाइप करा.</string>
+    <string name="type_message_placeholder">संदेश टाइप करा...</string>
+    <string name="get_advice">🌱 सल्ला मिळवा</string>
+    <string name="advice_result_title">🌿 सल्ला</string>
+    <string name="advisor_disclaimer">💡 सल्ला हा सामान्य रोपांच्या काळजीच्या मार्गदर्शनासाठी आहे. गंभीर पीक समस्यांसाठी, स्थानिक कृषी तज्ञांचा सल्ला घ्या.</string>
+
+    <!-- Advisor Static Advice Strings -->
+    <string name="advice_prevent_disease">वनस्पतींचे रोग टाळण्यासाठी, रोपांमध्ये योग्य अंतर ठेवा, पानांवर अनावश्यक पाणी देणे टाळा, संक्रमित भाग काढून टाका, परिसर स्वच्छ ठेवा आणि पुरेसा सूर्यप्रकाश व हवा खेळती ठेवा.</string>
+    <string name="advice_yellow_leaves">पाने पिवळी पडण्याची अनेक कारणे असू शकतात, ज्यामध्ये जास्त पाणी देणे, कमी पाणी देणे, पाण्याचा निचरा न होणे, पोषक तत्वांची कमतरता किंवा नैसर्गिक वय वाढणे समाविष्ट आहे. प्रथम मातीतील ओलावा तपासा आणि रोपाला चांगला पाण्याचा निचरा असल्याची खात्री करा.</string>
+    <string name="advice_watering">पाणी देण्याची वारंवारता पीक, माती, तापमान आणि हवामानावर अवलंबून असते. पाणी देण्यापूर्वी माती तपासा. मातीचा वरचा थर सुकू लागल्यावर पाणी द्या आणि मुळे सतत पाण्यात ठेवणे टाळा.</string>
+    <string name="advice_growth">रोपांची वाढ सुधारण्यासाठी, पुरेसा सूर्यप्रकाश, योग्य माती, संतुलित पोषक तत्वे, पुरेसे पाणी आणि चांगली हवा खेळती ठेवा. खराब झालेली पाने काढून टाका आणि कीटक किंवा रोगांसाठी नियमितपणे रोपाचे निरीक्षण करा.</string>
+    <string name="advice_general_disease">असामान्य डाग, रंग बदलणे, सुकणे किंवा बुरशीच्या वाढीसाठी पाने, खोड आणि फळांची पाहणी करा. गंभीर बाधित भाग काढून टाका आणि हवा खेळती ठेवा. एक स्पष्ट फोटो देखील समस्या ओळखण्यास मदत करू शकतो.</string>
+    <string name="advice_pests">कीटक किंवा नुकसानीसाठी पानांच्या खालच्या बाजूची आणि कोवळ्या कोंबांची पाहणी करा. शक्य असेल तेव्हा दिसणारे कीटक काढून टाका आणि रोप निरोगी ठेवा. नियमितपणे निरीक्षण करा जेणेकरून प्रादुर्भाव लवकर ओळखता येईल.</string>
+    <string name="advice_empty_prompt">कृपया आधी तुमच्या रोपाबद्दल किंवा पिकाबद्दल प्रश्न प्रविष्ट करा.</string>
+    <string name="advice_default">या प्रश्नासाठी, रोपाची पाने, मातीतील ओलावा, सूर्यप्रकाश आणि एकूण वाढीच्या परिस्थिती तपासून सुरुवात करा. जर तुम्ही एखाद्या विशिष्ट रोगाशी किंवा कीटकाशी सामना करत असाल तर पुढील निदानासाठी प्रभावित भागाचा स्पष्ट फोटो घ्या.</string>
+</resources>
