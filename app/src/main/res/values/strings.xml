@@ -1,3 +1,102 @@
 <resources>
     <string name="app_name">AgroMedic</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_scan">Scan</string>
+    <string name="nav_history">History</string>
+    <string name="nav_advisor">Advisor</string>
+
+    <!-- Auth / Registration / Login -->
+    <string name="login_title">Welcome Back</string>
+    <string name="login_subtitle">Login to access your AgroMedic account</string>
+    <string name="register_title">Create Account</string>
+    <string name="register_subtitle">Register to protect your crops</string>
+    <string name="username">Username</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="password">Password</string>
+    <string name="preferred_language">Preferred Language</string>
+    <string name="select_language">Select Language</string>
+    <string name="register_button">Register</string>
+    <string name="login_button">Login</string>
+    <string name="continue_as_guest">Continue as Guest</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="logout">Logout</string>
+    <string name="show_password">Show Password</string>
+    <string name="hide_password">Hide Password</string>
+
+    <!-- Validation / Error Messages -->
+    <string name="error_username_required">Username is required</string>
+    <string name="error_invalid_mobile">Enter a valid 10-digit Indian mobile number</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_invalid_credentials">Invalid mobile number or password</string>
+    <string name="error_user_exists">Mobile number is already registered</string>
+
+    <!-- Home Screen -->
+    <string name="welcome_farmer">Good morning, %1$s</string>
+    <string name="guest_user">Guest Farmer</string>
+    <string name="home_subtitle">Check your plant, protect your crop.</string>
+    <string name="check_my_plant">Check My Plant</string>
+    <string name="check_plant_desc">Scan a leaf to identify a possible disease.</string>
+    <string name="scan_crop">Scan Crop</string>
+    <string name="camera_ready">Camera ready ✓</string>
+    <string name="camera_permission_required">Camera permission required</string>
+    <string name="recent_scans">Recent Scans</string>
+    <string name="view_all">View All</string>
+    <string name="no_recent_scans">No recent scans</string>
+    <string name="no_recent_scans_desc">Your plant diagnoses will appear here.</string>
+
+    <!-- Camera / Analysis Screen -->
+    <string name="camera_back">← Back</string>
+    <string name="camera_capture">📸 Capture</string>
+    <string name="crop_analysis">Crop Analysis</string>
+    <string name="analyzing_crop">Analyzing crop...</string>
+    <string name="low_confidence_title">⚠️ Low Confidence</string>
+    <string name="low_confidence_desc">The AI is not confident enough in this result.</string>
+    <string name="confidence_label">Confidence: %1$.1f%%</string>
+    <string name="low_confidence_instruction">Please capture another clear image of the leaf with good lighting.</string>
+    <string name="retake">↻ Retake</string>
+    <string name="analyze">🔬 Analyze</string>
+    <string name="disease_info_not_available">Disease information is not available for this prediction.</string>
+    <string name="symptoms_title">🔍 Symptoms</string>
+    <string name="treatment_title">💊 Treatment</string>
+    <string name="prevention_title">🛡 Prevention</string>
+
+    <!-- History Screen -->
+    <string name="scan_history_title">Scan History</string>
+    <string name="scan_history_subtitle">Review your past plant diagnoses.</string>
+    <string name="no_scans_yet">No scans yet</string>
+    <string name="no_scans_yet_desc">Your plant diagnoses will appear here after you scan a crop.</string>
+    <string name="history_today">TODAY</string>
+    <string name="history_earlier">EARLIER</string>
+    <string name="history_confidence_format">%1$s • %2$.1f%% confidence</string>
+
+    <!-- AI Advisor Screen -->
+    <string name="advisor_title">AI Plant Advisor</string>
+    <string name="advisor_subtitle">Ask questions about your crops and plants.</string>
+    <string name="advisor_card_title">AgroMedic Advisor</string>
+    <string name="advisor_card_subtitle">Your farming assistant</string>
+    <string name="advisor_intro">I can help you understand plant diseases, symptoms, treatments, and general crop care.</string>
+    <string name="suggested_questions">Suggested Questions</string>
+    <string name="question_1">How can I prevent plant diseases?</string>
+    <string name="question_2">What should I do if my leaves turn yellow?</string>
+    <string name="question_3">How often should I water my crop?</string>
+    <string name="question_4">How do I improve plant growth?</string>
+    <string name="ask_own_question">Ask your own question</string>
+    <string name="ask_question_desc">Type a question about your plant or crop to get advice.</string>
+    <string name="type_message_placeholder">Type a message...</string>
+    <string name="get_advice">🌱 Get Advice</string>
+    <string name="advice_result_title">🌿 Advice</string>
+    <string name="advisor_disclaimer">💡 Advice is for general plant-care guidance. For serious crop problems, consult a local agricultural expert.</string>
+
+    <!-- Advisor Static Advice Strings -->
+    <string name="advice_prevent_disease">To prevent plant diseases, keep good spacing between plants, avoid watering the leaves unnecessarily, remove infected plant material, keep the growing area clean, and provide adequate sunlight and air circulation.</string>
+    <string name="advice_yellow_leaves">Yellow leaves can have several causes, including overwatering, underwatering, poor drainage, nutrient deficiency, or natural aging. Check the soil moisture first and make sure the plant has good drainage.</string>
+    <string name="advice_watering">Watering frequency depends on the crop, soil, temperature, and weather. Check the soil before watering. Water when the upper layer of soil begins to dry, and avoid keeping the roots constantly waterlogged.</string>
+    <string name="advice_growth">To improve plant growth, provide sufficient sunlight, suitable soil, balanced nutrients, adequate water, and good air circulation. Remove damaged leaves and monitor the plant regularly for pests or disease.</string>
+    <string name="advice_general_disease">Inspect the leaves, stems, and fruit for unusual spots, discoloration, wilting, or fungal growth. Remove badly affected plant material and improve air circulation. A clear photo can also help identify the problem.</string>
+    <string name="advice_pests">Inspect the underside of leaves and young shoots for insects or damage. Remove visible pests when possible and keep the plant healthy. Monitor the plant regularly so an infestation can be detected early.</string>
+    <string name="advice_empty_prompt">Please enter a question about your plant or crop first.</string>
+    <string name="advice_default">For this question, start by checking the plant\'s leaves, soil moisture, sunlight, and overall growing conditions. If you are dealing with a specific disease or pest, take a clear photo of the affected part of the plant for further diagnosis.</string>
 </resources>

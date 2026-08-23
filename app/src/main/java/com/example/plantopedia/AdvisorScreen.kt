@@ -29,16 +29,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun AdvisorScreen() {
-
-    // =========================================================
-    // COLORS
-    // =========================================================
+    val context = LocalContext.current
 
     val backgroundColor = Color(0xFFF8F4EC)
     val darkGreen = Color(0xFF174F3D)
@@ -46,647 +44,311 @@ fun AdvisorScreen() {
     val lightGreen = Color(0xFFE7F0E8)
     val grayText = Color(0xFF777777)
 
-
-    // =========================================================
-    // STATE
-    // =========================================================
-
-    var question by remember {
-        mutableStateOf("")
-    }
-
-    var advice by remember {
-        mutableStateOf<String?>(null)
-    }
-
-
-    // =========================================================
-    // GET ADVICE FUNCTION
-    // =========================================================
+    var question by remember { mutableStateOf("") }
+    var advice by remember { mutableStateOf<String?>(null) }
 
     fun getAdvice(userQuestion: String): String {
-
         val text = userQuestion.lowercase().trim()
 
         return when {
-
-            text.contains("prevent") &&
-                    text.contains("disease") -> {
-
-                "To prevent plant diseases, keep good spacing between plants, " +
-                        "avoid watering the leaves unnecessarily, remove infected " +
-                        "plant material, keep the growing area clean, and provide " +
-                        "adequate sunlight and air circulation."
+            (text.contains("prevent") || text.contains("रोक") || text.contains("प्रतिबंध")) &&
+                    (text.contains("disease") || text.contains("बीमारी") || text.contains("रोग")) -> {
+                context.getString(R.string.advice_prevent_disease)
             }
 
-            text.contains("yellow") &&
-                    text.contains("leaf") -> {
-
-                "Yellow leaves can have several causes, including overwatering, " +
-                        "underwatering, poor drainage, nutrient deficiency, or " +
-                        "natural aging. Check the soil moisture first and make " +
-                        "sure the plant has good drainage."
+            (text.contains("yellow") || text.contains("पील") || text.contains("पिवळ")) &&
+                    (text.contains("leaf") || text.contains("पत्ती") || text.contains("पान")) -> {
+                context.getString(R.string.advice_yellow_leaves)
             }
 
-            text.contains("water") -> {
-
-                "Watering frequency depends on the crop, soil, temperature, " +
-                        "and weather. Check the soil before watering. Water when " +
-                        "the upper layer of soil begins to dry, and avoid keeping " +
-                        "the roots constantly waterlogged."
+            text.contains("water") || text.contains("पानी") || text.contains("पाणी") -> {
+                context.getString(R.string.advice_watering)
             }
 
-            text.contains("growth") ||
-                    text.contains("grow") -> {
-
-                "To improve plant growth, provide sufficient sunlight, suitable " +
-                        "soil, balanced nutrients, adequate water, and good air " +
-                        "circulation. Remove damaged leaves and monitor the plant " +
-                        "regularly for pests or disease."
+            text.contains("growth") || text.contains("grow") || text.contains("वृद्धि") || text.contains("वाढ") -> {
+                context.getString(R.string.advice_growth)
             }
 
-            text.contains("disease") -> {
-
-                "Inspect the leaves, stems, and fruit for unusual spots, " +
-                        "discoloration, wilting, or fungal growth. Remove badly " +
-                        "affected plant material and improve air circulation. " +
-                        "A clear photo can also help identify the problem."
+            text.contains("disease") || text.contains("बीमारी") || text.contains("रोग") -> {
+                context.getString(R.string.advice_general_disease)
             }
 
-            text.contains("pest") ||
-                    text.contains("insect") -> {
-
-                "Inspect the underside of leaves and young shoots for insects " +
-                        "or damage. Remove visible pests when possible and keep " +
-                        "the plant healthy. Monitor the plant regularly so an " +
-                        "infestation can be detected early."
+            text.contains("pest") || text.contains("insect") || text.contains("कीट") || text.contains("कीटक") -> {
+                context.getString(R.string.advice_pests)
             }
 
             text.isEmpty() -> {
-
-                "Please enter a question about your plant or crop first."
+                context.getString(R.string.advice_empty_prompt)
             }
 
             else -> {
-
-                "For this question, start by checking the plant's leaves, " +
-                        "soil moisture, sunlight, and overall growing conditions. " +
-                        "If you are dealing with a specific disease or pest, " +
-                        "take a clear photo of the affected part of the plant " +
-                        "for further diagnosis."
+                context.getString(R.string.advice_default)
             }
         }
     }
 
-
-    // =========================================================
-    // SCREEN
-    // =========================================================
+    val q1 = stringResource(id = R.string.question_1)
+    val q2 = stringResource(id = R.string.question_2)
+    val q3 = stringResource(id = R.string.question_3)
+    val q4 = stringResource(id = R.string.question_4)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = backgroundColor
     ) {
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-
             contentPadding = androidx.compose.foundation.layout.PaddingValues(
                 start = 20.dp,
                 end = 20.dp,
                 top = 20.dp,
                 bottom = 30.dp
             ),
-
-            verticalArrangement =
-                Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-
-            // =================================================
-            // HEADER
-            // =================================================
-
             item {
-
                 Text(
-                    text = "AI Plant Advisor",
-
-                    style =
-                        MaterialTheme.typography.headlineMedium,
-
+                    text = stringResource(id = R.string.advisor_title),
+                    style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-
                     color = darkGreen
                 )
 
-                Spacer(
-                    modifier = Modifier.height(6.dp)
-                )
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text =
-                        "Ask questions about your crops and plants.",
-
-                    style =
-                        MaterialTheme.typography.bodyLarge,
-
+                    text = stringResource(id = R.string.advisor_subtitle),
+                    style = MaterialTheme.typography.bodyLarge,
                     color = grayText
                 )
 
-                Spacer(
-                    modifier = Modifier.height(14.dp)
-                )
+                Spacer(modifier = Modifier.height(14.dp))
             }
 
-
-            // =================================================
-            // INTRO CARD
-            // =================================================
-
             item {
-
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-
-                    shape =
-                        RoundedCornerShape(24.dp),
-
+                    shape = RoundedCornerShape(24.dp),
                     color = Color.White,
-
                     tonalElevation = 2.dp
                 ) {
-
-                    Column(
-                        modifier =
-                            Modifier.padding(20.dp)
-                    ) {
-
-                        Row(
-                            verticalAlignment =
-                                Alignment.CenterVertically
-                        ) {
-
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
                                     .size(64.dp)
-                                    .clip(
-                                        RoundedCornerShape(20.dp)
-                                    )
+                                    .clip(RoundedCornerShape(20.dp))
                                     .background(lightGreen),
-
-                                contentAlignment =
-                                    Alignment.Center
+                                contentAlignment = Alignment.Center
                             ) {
-
                                 Text(
                                     text = "🌱",
-
-                                    style =
-                                        MaterialTheme.typography.headlineMedium
+                                    style = MaterialTheme.typography.headlineMedium
                                 )
                             }
 
-                            Spacer(
-                                modifier = Modifier.size(14.dp)
-                            )
+                            Spacer(modifier = Modifier.size(14.dp))
 
                             Column {
-
                                 Text(
-                                    text =
-                                        "AgroMedic Advisor",
-
-                                    style =
-                                        MaterialTheme.typography.titleLarge,
-
-                                    fontWeight =
-                                        FontWeight.Bold,
-
+                                    text = stringResource(id = R.string.advisor_card_title),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
                                     color = darkGreen
                                 )
 
-                                Spacer(
-                                    modifier =
-                                        Modifier.height(3.dp)
-                                )
+                                Spacer(modifier = Modifier.height(3.dp))
 
                                 Text(
-                                    text =
-                                        "Your farming assistant",
-
-                                    style =
-                                        MaterialTheme.typography.bodyMedium,
-
+                                    text = stringResource(id = R.string.advisor_card_subtitle),
+                                    style = MaterialTheme.typography.bodyMedium,
                                     color = grayText
                                 )
                             }
                         }
 
-                        Spacer(
-                            modifier =
-                                Modifier.height(18.dp)
-                        )
+                        Spacer(modifier = Modifier.height(18.dp))
 
                         Text(
-                            text =
-                                "I can help you understand plant diseases, " +
-                                        "symptoms, treatments, and general crop care.",
-
-                            style =
-                                MaterialTheme.typography.bodyLarge,
-
+                            text = stringResource(id = R.string.advisor_intro),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = darkGreen
                         )
                     }
                 }
 
-                Spacer(
-                    modifier =
-                        Modifier.height(14.dp)
-                )
+                Spacer(modifier = Modifier.height(14.dp))
             }
 
-
-            // =================================================
-            // SUGGESTED QUESTIONS TITLE
-            // =================================================
-
             item {
-
                 Text(
-                    text = "Suggested Questions",
-
-                    style =
-                        MaterialTheme.typography.headlineSmall,
-
-                    fontWeight =
-                        FontWeight.Bold,
-
+                    text = stringResource(id = R.string.suggested_questions),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
                     color = darkGreen
                 )
 
-                Spacer(
-                    modifier =
-                        Modifier.height(2.dp)
-                )
+                Spacer(modifier = Modifier.height(2.dp))
             }
 
-
-            // =================================================
-            // QUESTION 1
-            // =================================================
-
             item {
-
                 AdvisorQuestionCard(
-                    question =
-                        "How can I prevent plant diseases?",
-
+                    question = q1,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question =
-                            "How can I prevent plant diseases?"
-
+                        question = q1
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // QUESTION 2
-            // =================================================
-
             item {
-
                 AdvisorQuestionCard(
-                    question =
-                        "What should I do if my leaves turn yellow?",
-
+                    question = q2,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question =
-                            "What should I do if my leaves turn yellow?"
-
+                        question = q2
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // QUESTION 3
-            // =================================================
-
             item {
-
                 AdvisorQuestionCard(
-                    question =
-                        "How often should I water my crop?",
-
+                    question = q3,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question =
-                            "How often should I water my crop?"
-
+                        question = q3
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // QUESTION 4
-            // =================================================
-
             item {
-
                 AdvisorQuestionCard(
-                    question =
-                        "How do I improve plant growth?",
-
+                    question = q4,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question =
-                            "How do I improve plant growth?"
-
+                        question = q4
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // ASK YOUR OWN QUESTION
-            // =================================================
-
             item {
-
-                Spacer(
-                    modifier =
-                        Modifier.height(10.dp)
-                )
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Surface(
-                    modifier =
-                        Modifier.fillMaxWidth(),
-
-                    shape =
-                        RoundedCornerShape(24.dp),
-
-                    color =
-                        Color.White,
-
-                    tonalElevation =
-                        2.dp
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(24.dp),
+                    color = Color.White,
+                    tonalElevation = 2.dp
                 ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = stringResource(id = R.string.ask_own_question),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = darkGreen
+                        )
 
-                    Column(
-                        modifier =
-                            Modifier.padding(20.dp)
-                    ) {
+                        Spacer(modifier = Modifier.height(6.dp))
 
                         Text(
-                            text =
-                                "Ask your own question",
-
-                            style =
-                                MaterialTheme.typography.titleLarge,
-
-                            fontWeight =
-                                FontWeight.Bold,
-
-                            color =
-                                darkGreen
+                            text = stringResource(id = R.string.ask_question_desc),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = grayText
                         )
 
-                        Spacer(
-                            modifier =
-                                Modifier.height(6.dp)
-                        )
-
-                        Text(
-                            text =
-                                "Type a question about your plant or crop to get advice.",
-
-                            style =
-                                MaterialTheme.typography.bodyMedium,
-
-                            color =
-                                grayText
-                        )
-
-                        Spacer(
-                            modifier =
-                                Modifier.height(14.dp)
-                        )
-
-
-                        // -------------------------------------------------
-                        // TEXT BOX
-                        // -------------------------------------------------
+                        Spacer(modifier = Modifier.height(14.dp))
 
                         OutlinedTextField(
-
-                            value =
-                                question,
-
+                            value = question,
                             onValueChange = {
-
                                 question = it
-
-                                // Clear old answer when user edits question
                                 advice = null
                             },
-
-                            modifier =
-                                Modifier.fillMaxWidth(),
-
+                            modifier = Modifier.fillMaxWidth(),
                             minLines = 3,
-
                             maxLines = 5,
-
-                            shape =
-                                RoundedCornerShape(18.dp),
-
+                            shape = RoundedCornerShape(18.dp),
                             placeholder = {
-
-                                Text(
-                                    text =
-                                        "Type a message..."
-                                )
+                                Text(text = stringResource(id = R.string.type_message_placeholder))
                             },
-
                             singleLine = false
                         )
 
-
-                        Spacer(
-                            modifier =
-                                Modifier.height(14.dp)
-                        )
-
-
-                        // -------------------------------------------------
-                        // GET ADVICE BUTTON
-                        // -------------------------------------------------
+                        Spacer(modifier = Modifier.height(14.dp))
 
                         Button(
-
                             onClick = {
-
-                                advice =
-                                    getAdvice(question)
+                                advice = getAdvice(question)
                             },
-
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(58.dp),
-
-                            shape =
-                                RoundedCornerShape(18.dp),
-
-                            colors =
-                                ButtonDefaults.buttonColors(
-                                    containerColor =
-                                        orange,
-
-                                    contentColor =
-                                        Color.White
-                                )
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(58.dp),
+                            shape = RoundedCornerShape(18.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = orange,
+                                contentColor = Color.White
+                            )
                         ) {
-
                             Text(
-                                text =
-                                    "🌱  Get Advice",
-
-                                style =
-                                    MaterialTheme.typography.titleMedium,
-
-                                fontWeight =
-                                    FontWeight.Bold
+                                text = stringResource(id = R.string.get_advice),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
                 }
             }
-
-
-            // =================================================
-            // ADVICE RESULT
-            // =================================================
 
             if (advice != null) {
-
                 item {
-
                     Surface(
-                        modifier =
-                            Modifier.fillMaxWidth(),
-
-                        shape =
-                            RoundedCornerShape(22.dp),
-
-                        color =
-                            Color.White,
-
-                        tonalElevation =
-                            2.dp
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(22.dp),
+                        color = Color.White,
+                        tonalElevation = 2.dp
                     ) {
-
-                        Column(
-                            modifier =
-                                Modifier.padding(20.dp)
-                        ) {
-
+                        Column(modifier = Modifier.padding(20.dp)) {
                             Text(
-                                text =
-                                    "🌿 Advice",
-
-                                style =
-                                    MaterialTheme.typography.titleLarge,
-
-                                fontWeight =
-                                    FontWeight.Bold,
-
-                                color =
-                                    darkGreen
+                                text = stringResource(id = R.string.advice_result_title),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = darkGreen
                             )
 
-                            Spacer(
-                                modifier =
-                                    Modifier.height(10.dp)
-                            )
+                            Spacer(modifier = Modifier.height(10.dp))
 
                             Text(
-                                text =
-                                    advice!!,
-
-                                style =
-                                    MaterialTheme.typography.bodyLarge,
-
-                                color =
-                                    darkGreen
+                                text = advice!!,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = darkGreen
                             )
                         }
                     }
                 }
             }
 
-
-            // =================================================
-            // DISCLAIMER
-            // =================================================
-
             item {
-
-                Spacer(
-                    modifier =
-                        Modifier.height(6.dp)
-                )
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text =
-                        "💡 Advice is for general plant-care guidance. " +
-                                "For serious crop problems, consult a local agricultural expert.",
-
-                    style =
-                        MaterialTheme.typography.bodyMedium,
-
-                    color =
-                        grayText
+                    text = stringResource(id = R.string.advisor_disclaimer),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = grayText
                 )
 
-                Spacer(
-                    modifier =
-                        Modifier.height(20.dp)
-                )
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
 }
-
-
-// ============================================================
-// SUGGESTED QUESTION CARD
-// ============================================================
 
 @Composable
 fun AdvisorQuestionCard(
@@ -695,93 +357,48 @@ fun AdvisorQuestionCard(
     darkGreen: Color,
     onClick: () -> Unit
 ) {
-
     Surface(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onClick()
-                },
-
-        shape =
-            RoundedCornerShape(20.dp),
-
-        color =
-            Color.White,
-
-        tonalElevation =
-            1.dp
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        shape = RoundedCornerShape(20.dp),
+        color = Color.White,
+        tonalElevation = 1.dp
     ) {
-
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-
-            verticalAlignment =
-                Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-
             Box(
-                modifier =
-                    Modifier
-                        .size(52.dp)
-                        .clip(
-                            RoundedCornerShape(16.dp)
-                        )
-                        .background(
-                            Color(0xFFF3E5DB)
-                        ),
-
-                contentAlignment =
-                    Alignment.Center
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color(0xFFF3E5DB)),
+                contentAlignment = Alignment.Center
             ) {
-
                 Text(
-                    text =
-                        "✦",
-
-                    color =
-                        orange,
-
-                    fontWeight =
-                        FontWeight.Bold,
-
-                    style =
-                        MaterialTheme.typography.titleLarge
+                    text = "✦",
+                    color = orange,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
 
-            Spacer(
-                modifier =
-                    Modifier.size(14.dp)
+            Spacer(modifier = Modifier.size(14.dp))
+
+            Text(
+                text = question,
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyLarge,
+                color = darkGreen
             )
 
             Text(
-                text =
-                    question,
-
-                modifier =
-                    Modifier.weight(1f),
-
-                style =
-                    MaterialTheme.typography.bodyLarge,
-
-                color =
-                    darkGreen
-            )
-
-            Text(
-                text =
-                    "›",
-
-                style =
-                    MaterialTheme.typography.headlineSmall,
-
-                color =
-                    orange
+                text = "›",
+                style = MaterialTheme.typography.headlineSmall,
+                color = orange
             )
         }
     }
