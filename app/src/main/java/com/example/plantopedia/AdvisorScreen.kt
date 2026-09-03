@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -24,19 +25,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 @Composable
 fun AdvisorScreen() {
-    val context = LocalContext.current
+
+    val coroutineScope = rememberCoroutineScope()
 
     val backgroundColor = Color(0xFFF8F4EC)
     val darkGreen = Color(0xFF174F3D)
@@ -46,46 +49,7 @@ fun AdvisorScreen() {
 
     var question by remember { mutableStateOf("") }
     var advice by remember { mutableStateOf<String?>(null) }
-
-    fun getAdvice(userQuestion: String): String {
-        val text = userQuestion.lowercase().trim()
-
-        return when {
-            (text.contains("prevent") || text.contains("रोक") || text.contains("प्रतिबंध")) &&
-                    (text.contains("disease") || text.contains("बीमारी") || text.contains("रोग")) -> {
-                context.getString(R.string.advice_prevent_disease)
-            }
-
-            (text.contains("yellow") || text.contains("पील") || text.contains("पिवळ")) &&
-                    (text.contains("leaf") || text.contains("पत्ती") || text.contains("पान")) -> {
-                context.getString(R.string.advice_yellow_leaves)
-            }
-
-            text.contains("water") || text.contains("पानी") || text.contains("पाणी") -> {
-                context.getString(R.string.advice_watering)
-            }
-
-            text.contains("growth") || text.contains("grow") || text.contains("वृद्धि") || text.contains("वाढ") -> {
-                context.getString(R.string.advice_growth)
-            }
-
-            text.contains("disease") || text.contains("बीमारी") || text.contains("रोग") -> {
-                context.getString(R.string.advice_general_disease)
-            }
-
-            text.contains("pest") || text.contains("insect") || text.contains("कीट") || text.contains("कीटक") -> {
-                context.getString(R.string.advice_pests)
-            }
-
-            text.isEmpty() -> {
-                context.getString(R.string.advice_empty_prompt)
-            }
-
-            else -> {
-                context.getString(R.string.advice_default)
-            }
-        }
-    }
+    var isLoading by remember { mutableStateOf(false) }
 
     val q1 = stringResource(id = R.string.question_1)
     val q2 = stringResource(id = R.string.question_2)
@@ -98,7 +62,7 @@ fun AdvisorScreen() {
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(
+            contentPadding = PaddingValues(
                 start = 20.dp,
                 end = 20.dp,
                 top = 20.dp,
@@ -151,7 +115,7 @@ fun AdvisorScreen() {
 
                             Column {
                                 Text(
-                                    text = stringResource(id = R.string.advisor_card_title),
+                                    text = stringResource(R.string.advisor_card_title),
                                     style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.Bold,
                                     color = darkGreen
@@ -160,7 +124,7 @@ fun AdvisorScreen() {
                                 Spacer(modifier = Modifier.height(3.dp))
 
                                 Text(
-                                    text = stringResource(id = R.string.advisor_card_subtitle),
+                                    text = stringResource(R.string.advisor_card_subtitle),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = grayText
                                 )
@@ -170,7 +134,7 @@ fun AdvisorScreen() {
                         Spacer(modifier = Modifier.height(18.dp))
 
                         Text(
-                            text = stringResource(id = R.string.advisor_intro),
+                            text = stringResource(R.string.advisor_intro),
                             style = MaterialTheme.typography.bodyLarge,
                             color = darkGreen
                         )
@@ -182,7 +146,7 @@ fun AdvisorScreen() {
 
             item {
                 Text(
-                    text = stringResource(id = R.string.suggested_questions),
+                    text = stringResource(R.string.suggested_questions),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = darkGreen
@@ -250,7 +214,7 @@ fun AdvisorScreen() {
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
-                            text = stringResource(id = R.string.ask_own_question),
+                            text = stringResource(R.string.ask_own_question),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = darkGreen
@@ -259,7 +223,7 @@ fun AdvisorScreen() {
                         Spacer(modifier = Modifier.height(6.dp))
 
                         Text(
-                            text = stringResource(id = R.string.ask_question_desc),
+                            text = stringResource(R.string.ask_question_desc),
                             style = MaterialTheme.typography.bodyMedium,
                             color = grayText
                         )
@@ -277,17 +241,26 @@ fun AdvisorScreen() {
                             maxLines = 5,
                             shape = RoundedCornerShape(18.dp),
                             placeholder = {
-                                Text(text = stringResource(id = R.string.type_message_placeholder))
+                                Text(text = stringResource(R.string.type_message_placeholder))
                             },
-                            singleLine = false
+                            singleLine = false,
+                            enabled = !isLoading
                         )
 
                         Spacer(modifier = Modifier.height(14.dp))
 
                         Button(
                             onClick = {
-                                advice = getAdvice(question)
+                                if (question.trim().isNotEmpty() && !isLoading) {
+                                    coroutineScope.launch {
+                                        isLoading = true
+                                        advice = null
+                                        advice = GeminiService.getAdvice(question.trim())
+                                        isLoading = false
+                                    }
+                                }
                             },
+                            enabled = !isLoading && question.trim().isNotEmpty(),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(58.dp),
@@ -298,7 +271,11 @@ fun AdvisorScreen() {
                             )
                         ) {
                             Text(
-                                text = stringResource(id = R.string.get_advice),
+                                text = if (isLoading) {
+                                    "Getting advice..."
+                                } else {
+                                    stringResource(R.string.get_advice)
+                                },
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
@@ -317,7 +294,7 @@ fun AdvisorScreen() {
                     ) {
                         Column(modifier = Modifier.padding(20.dp)) {
                             Text(
-                                text = stringResource(id = R.string.advice_result_title),
+                                text = stringResource(R.string.advice_result_title),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 color = darkGreen
@@ -339,7 +316,7 @@ fun AdvisorScreen() {
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = stringResource(id = R.string.advisor_disclaimer),
+                    text = stringResource(R.string.advisor_disclaimer),
                     style = MaterialTheme.typography.bodyMedium,
                     color = grayText
                 )
