@@ -15,7 +15,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +29,8 @@ import com.example.plantopedia.ui.theme.PlantopediaTheme
 
 class MainActivity : ComponentActivity() {
 
+    private var currentLangCode by mutableStateOf("en")
+
     private val cameraPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -37,9 +38,15 @@ class MainActivity : ComponentActivity() {
             showApp(granted)
         }
 
+    override fun attachBaseContext(newBase: Context) {
+        val lang = UserManager.getLanguage(newBase)
+        val contextWithLocale = LocaleHelper.applyLanguage(newBase, lang)
+        super.attachBaseContext(contextWithLocale)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currentLangCode = UserManager.getLanguage(this)
 
         val permissionGranted =
             ContextCompat.checkSelfPermission(
@@ -48,299 +55,151 @@ class MainActivity : ComponentActivity() {
             ) == PackageManager.PERMISSION_GRANTED
 
         if (permissionGranted) {
-
             showApp(true)
-
         } else {
-
             cameraPermissionLauncher.launch(
                 Manifest.permission.CAMERA
             )
         }
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        val lang = UserManager.getLanguagePreference(newBase)
-        val localizedContext = LocaleHelper.setLocale(newBase, lang)
-        super.attachBaseContext(localizedContext)
+    private fun updateLanguage(langCode: String) {
+        UserManager.setLanguage(this, langCode)
+        currentLangCode = langCode
+        recreate()
     }
 
     private fun showApp(cameraPermissionGranted: Boolean) {
-
         setContent {
-
-            val baseContext = LocalContext.current
-            var currentLanguage by remember {
-                mutableStateOf(UserManager.getLanguagePreference(baseContext))
-            }
-
-            val localizedContext = remember(currentLanguage) {
-                LocaleHelper.setLocale(baseContext, currentLanguage)
+            val localizedContext = remember(currentLangCode) {
+                LocaleHelper.applyLanguage(this, currentLangCode)
             }
 
             CompositionLocalProvider(LocalContext provides localizedContext) {
-
                 PlantopediaTheme {
-
-                    var isLoggedIn by remember {
-                        mutableStateOf(UserManager.isLoggedIn(baseContext))
+                    var isAuthCompleted by remember {
+                        mutableStateOf(UserManager.isLoggedIn(this) || UserManager.isGuest(this))
                     }
 
-                    var currentAuthScreen by remember {
-                        mutableStateOf(if (isLoggedIn) "main" else "register")
-                    }
-
-                    var currentScreen by remember {
-                        mutableStateOf("home")
-                    }
-
-                    if (!isLoggedIn) {
-                        when (currentAuthScreen) {
-                            "register" -> {
-                                RegistrationScreen(
-                                    onRegisterSuccess = { selectedLang ->
-                                        currentLanguage = selectedLang
-                                        isLoggedIn = true
-                                        currentAuthScreen = "main"
-                                        currentScreen = "home"
-                                    },
-                                    onNavigateToLogin = {
-                                        currentAuthScreen = "login"
-                                    }
-                                )
+                    if (!isAuthCompleted) {
+                        AuthScreen(
+                            onAuthSuccess = {
+                                isAuthCompleted = true
+                            },
+                            onLanguageChanged = { langCode ->
+                                updateLanguage(langCode)
                             }
-                            "login" -> {
-                                LoginScreen(
-                                    onLoginSuccess = {
-                                        currentLanguage = UserManager.getLanguagePreference(baseContext)
-                                        isLoggedIn = true
-                                        currentAuthScreen = "main"
-                                        currentScreen = "home"
-                                    },
-                                    onNavigateToRegister = {
-                                        currentAuthScreen = "register"
-                                    }
-                                )
-                            }
-                        }
+                        )
                     } else {
+                        var currentScreen by remember {
+                            mutableStateOf("home")
+                        }
 
                         Scaffold(
-
                             bottomBar = {
-
-                                // Hide navigation when camera is open
                                 if (currentScreen != "camera") {
-
                                     NavigationBar {
-
-                                        // =====================================
                                         // HOME
-                                        // =====================================
-
                                         NavigationBarItem(
-
-                                            selected =
-                                                currentScreen == "home",
-
-                                            onClick = {
-                                                currentScreen = "home"
-                                            },
-
+                                            selected = currentScreen == "home",
+                                            onClick = { currentScreen = "home" },
                                             icon = {
-
                                                 Text(
                                                     text = "⌂",
-                                                    style =
-                                                        MaterialTheme
-                                                            .typography
-                                                            .headlineSmall
+                                                    style = MaterialTheme.typography.headlineSmall
                                                 )
                                             },
-
                                             label = {
-                                                Text(stringResource(R.string.nav_home))
+                                                Text(stringResource(id = R.string.nav_home))
                                             }
                                         )
 
-
-                                        // =====================================
                                         // SCAN
-                                        // =====================================
-
                                         NavigationBarItem(
-
-                                            selected =
-                                                currentScreen == "camera",
-
-                                            onClick = {
-                                                currentScreen = "camera"
-                                            },
-
+                                            selected = currentScreen == "camera",
+                                            onClick = { currentScreen = "camera" },
                                             icon = {
-
                                                 Text(
                                                     text = "📷",
-                                                    style =
-                                                        MaterialTheme
-                                                            .typography
-                                                            .titleLarge
+                                                    style = MaterialTheme.typography.titleLarge
                                                 )
                                             },
-
                                             label = {
-                                                Text(stringResource(R.string.nav_scan))
+                                                Text(stringResource(id = R.string.nav_scan))
                                             }
                                         )
 
-
-                                        // =====================================
                                         // HISTORY
-                                        // =====================================
-
                                         NavigationBarItem(
-
-                                            selected =
-                                                currentScreen == "history",
-
-                                            onClick = {
-                                                currentScreen = "history"
-                                            },
-
+                                            selected = currentScreen == "history",
+                                            onClick = { currentScreen = "history" },
                                             icon = {
-
                                                 Text(
                                                     text = "◷",
-                                                    style =
-                                                        MaterialTheme
-                                                            .typography
-                                                            .headlineSmall
+                                                    style = MaterialTheme.typography.headlineSmall
                                                 )
                                             },
-
                                             label = {
-                                                Text(stringResource(R.string.nav_history))
+                                                Text(stringResource(id = R.string.nav_history))
                                             }
                                         )
 
-
-                                        // =====================================
                                         // ADVISOR
-                                        // =====================================
-
                                         NavigationBarItem(
-
-                                            selected =
-                                                currentScreen == "advisor",
-
-                                            onClick = {
-                                                currentScreen = "advisor"
-                                            },
-
+                                            selected = currentScreen == "advisor",
+                                            onClick = { currentScreen = "advisor" },
                                             icon = {
-
                                                 Text(
                                                     text = "✦",
-                                                    style =
-                                                        MaterialTheme
-                                                            .typography
-                                                            .headlineSmall
+                                                    style = MaterialTheme.typography.headlineSmall
                                                 )
                                             },
-
                                             label = {
-                                                Text(stringResource(R.string.nav_advisor))
+                                                Text(stringResource(id = R.string.nav_advisor))
                                             }
                                         )
                                     }
                                 }
                             }
-
                         ) { innerPadding ->
-
-
-                            // =============================================
-                            // SCREEN CONTENT
-                            // =============================================
-
                             when (currentScreen) {
-
-
-                                // -----------------------------------------
-                                // HOME
-                                // -----------------------------------------
-
                                 "home" -> {
-
                                     HomeScreen(
-
-                                        cameraPermissionGranted =
-                                            cameraPermissionGranted,
-
-                                        onScanClick = {
-                                            currentScreen = "camera"
+                                        cameraPermissionGranted = cameraPermissionGranted,
+                                        onScanClick = { currentScreen = "camera" },
+                                        onHistoryClick = { currentScreen = "history" },
+                                        onLanguageChanged = { langCode ->
+                                            updateLanguage(langCode)
                                         },
-
-                                        onHistoryClick = {
-                                            currentScreen = "history"
+                                        onLogout = {
+                                            isAuthCompleted = false
                                         },
-
-                                        onLogoutClick = {
-                                            UserManager.logoutUser(baseContext)
-                                            isLoggedIn = false
-                                            currentAuthScreen = "login"
-                                        },
-
-                                        modifier =
-                                            Modifier.padding(innerPadding)
+                                        modifier = Modifier.padding(innerPadding)
                                     )
                                 }
-
-
-                                // -----------------------------------------
-                                // CAMERA
-                                // -----------------------------------------
 
                                 "camera" -> {
-
                                     CameraScreen(
-
-                                        onBack = {
-                                            currentScreen = "home"
-                                        }
+                                        onBack = { currentScreen = "home" }
                                     )
                                 }
 
-
-                                // -----------------------------------------
-                                // HISTORY
-                                // -----------------------------------------
-
                                 "history" -> {
-
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
                                             .padding(innerPadding)
                                     ) {
-
                                         HistoryScreen()
                                     }
                                 }
 
-
-                                // -----------------------------------------
-                                // ADVISOR
-                                // -----------------------------------------
-
                                 "advisor" -> {
-
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
                                             .padding(innerPadding)
                                     ) {
-
                                         AdvisorScreen()
                                     }
                                 }

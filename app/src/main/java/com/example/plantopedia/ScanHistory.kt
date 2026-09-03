@@ -14,12 +14,20 @@ data class ScanHistoryItem(
 object ScanHistory {
 
     private const val PREFS_NAME = "plantopedia_history"
-    private const val HISTORY_KEY = "scans"
+
+    private fun getHistoryKey(context: Context): String {
+        return if (UserManager.isGuest(context)) {
+            "scans_guest"
+        } else {
+            "scans_user"
+        }
+    }
 
     fun save(
         context: Context,
         prediction: Prediction
     ) {
+        val prefsKey = getHistoryKey(context)
 
         val preferences =
             context.getSharedPreferences(
@@ -29,7 +37,7 @@ object ScanHistory {
 
         val existing =
             preferences.getString(
-                HISTORY_KEY,
+                prefsKey,
                 "[]"
             )
 
@@ -38,7 +46,6 @@ object ScanHistory {
 
         val item =
             JSONObject().apply {
-
                 put(
                     "crop",
                     prediction.crop ?: "Unknown"
@@ -60,12 +67,11 @@ object ScanHistory {
                 )
             }
 
-        // Newest scan goes first
         array.put(item)
 
         preferences.edit()
             .putString(
-                HISTORY_KEY,
+                prefsKey,
                 array.toString()
             )
             .apply()
@@ -74,6 +80,7 @@ object ScanHistory {
     fun getAll(
         context: Context
     ): List<ScanHistoryItem> {
+        val prefsKey = getHistoryKey(context)
 
         val preferences =
             context.getSharedPreferences(
@@ -83,7 +90,7 @@ object ScanHistory {
 
         val data =
             preferences.getString(
-                HISTORY_KEY,
+                prefsKey,
                 "[]"
             )
 
@@ -94,7 +101,6 @@ object ScanHistory {
             mutableListOf<ScanHistoryItem>()
 
         for (i in 0 until array.length()) {
-
             val item =
                 array.getJSONObject(i)
 
@@ -127,12 +133,13 @@ object ScanHistory {
             )
         }
 
-        return result
+        return result.reversed()
     }
 
     fun clear(
         context: Context
     ) {
+        val prefsKey = getHistoryKey(context)
 
         context
             .getSharedPreferences(
@@ -140,7 +147,7 @@ object ScanHistory {
                 Context.MODE_PRIVATE
             )
             .edit()
-            .remove(HISTORY_KEY)
+            .remove(prefsKey)
             .apply()
     }
 }

@@ -36,20 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
-
 @Composable
 fun AdvisorScreen() {
 
-    // =========================================================
-    // COROUTINE SCOPE
-    // =========================================================
-
     val coroutineScope = rememberCoroutineScope()
-
-
-    // =========================================================
-    // COLORS
-    // =========================================================
 
     val backgroundColor = Color(0xFFF8F4EC)
     val darkGreen = Color(0xFF174F3D)
@@ -57,622 +47,285 @@ fun AdvisorScreen() {
     val lightGreen = Color(0xFFE7F0E8)
     val grayText = Color(0xFF777777)
 
+    var question by remember { mutableStateOf("") }
+    var advice by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(false) }
 
-    // =========================================================
-    // STATE
-    // =========================================================
-
-    var question by remember {
-        mutableStateOf("")
-    }
-
-    var advice by remember {
-        mutableStateOf<String?>(null)
-    }
-
-    var isLoading by remember {
-        mutableStateOf(false)
-    }
-
-
-    // =========================================================
-    // SCREEN
-    // =========================================================
+    val q1 = stringResource(id = R.string.question_1)
+    val q2 = stringResource(id = R.string.question_2)
+    val q3 = stringResource(id = R.string.question_3)
+    val q4 = stringResource(id = R.string.question_4)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = backgroundColor
     ) {
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-
             contentPadding = PaddingValues(
                 start = 20.dp,
                 end = 20.dp,
                 top = 20.dp,
                 bottom = 30.dp
             ),
-
-            verticalArrangement =
-                Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-
-            // =================================================
-            // HEADER
-            // =================================================
-
             item {
-
                 Text(
-                    text = stringResource(R.string.ai_plant_advisor),
-
-                    style =
-                        MaterialTheme.typography.headlineMedium,
-
+                    text = stringResource(id = R.string.advisor_title),
+                    style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-
                     color = darkGreen
                 )
 
-                Spacer(
-                    modifier = Modifier.height(6.dp)
-                )
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = stringResource(R.string.advisor_subtitle),
-
-                    style =
-                        MaterialTheme.typography.bodyLarge,
-
+                    text = stringResource(id = R.string.advisor_subtitle),
+                    style = MaterialTheme.typography.bodyLarge,
                     color = grayText
                 )
 
-                Spacer(
-                    modifier = Modifier.height(14.dp)
-                )
+                Spacer(modifier = Modifier.height(14.dp))
             }
 
-
-            // =================================================
-            // INTRO CARD
-            // =================================================
-
             item {
-
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-
-                    shape =
-                        RoundedCornerShape(24.dp),
-
+                    shape = RoundedCornerShape(24.dp),
                     color = Color.White,
-
                     tonalElevation = 2.dp
                 ) {
-
-                    Column(
-                        modifier =
-                            Modifier.padding(20.dp)
-                    ) {
-
-                        Row(
-                            verticalAlignment =
-                                Alignment.CenterVertically
-                        ) {
-
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
                                     .size(64.dp)
-                                    .clip(
-                                        RoundedCornerShape(20.dp)
-                                    )
+                                    .clip(RoundedCornerShape(20.dp))
                                     .background(lightGreen),
-
-                                contentAlignment =
-                                    Alignment.Center
+                                contentAlignment = Alignment.Center
                             ) {
-
                                 Text(
                                     text = "🌱",
-
-                                    style =
-                                        MaterialTheme.typography.headlineMedium
+                                    style = MaterialTheme.typography.headlineMedium
                                 )
                             }
 
-                            Spacer(
-                                modifier = Modifier.size(14.dp)
-                            )
+                            Spacer(modifier = Modifier.size(14.dp))
 
                             Column {
-
                                 Text(
-                                    text = stringResource(
-                                        R.string.advisor_assistant_name
-                                    ),
-
-                                    style =
-                                        MaterialTheme.typography.titleLarge,
-
-                                    fontWeight =
-                                        FontWeight.Bold,
-
+                                    text = stringResource(R.string.advisor_card_title),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
                                     color = darkGreen
                                 )
 
-                                Spacer(
-                                    modifier =
-                                        Modifier.height(3.dp)
-                                )
+                                Spacer(modifier = Modifier.height(3.dp))
 
                                 Text(
-                                    text = stringResource(
-                                        R.string.advisor_assistant_role
-                                    ),
-
-                                    style =
-                                        MaterialTheme.typography.bodyMedium,
-
+                                    text = stringResource(R.string.advisor_card_subtitle),
+                                    style = MaterialTheme.typography.bodyMedium,
                                     color = grayText
                                 )
                             }
                         }
 
-                        Spacer(
-                            modifier =
-                                Modifier.height(18.dp)
-                        )
+                        Spacer(modifier = Modifier.height(18.dp))
 
                         Text(
-                            text = stringResource(
-                                R.string.advisor_intro_desc
-                            ),
-
-                            style =
-                                MaterialTheme.typography.bodyLarge,
-
+                            text = stringResource(R.string.advisor_intro),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = darkGreen
                         )
                     }
                 }
 
-                Spacer(
-                    modifier =
-                        Modifier.height(14.dp)
-                )
+                Spacer(modifier = Modifier.height(14.dp))
             }
 
-
-            // =================================================
-            // SUGGESTED QUESTIONS TITLE
-            // =================================================
-
             item {
-
                 Text(
-                    text = stringResource(
-                        R.string.suggested_questions
-                    ),
-
-                    style =
-                        MaterialTheme.typography.headlineSmall,
-
-                    fontWeight =
-                        FontWeight.Bold,
-
+                    text = stringResource(R.string.suggested_questions),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
                     color = darkGreen
                 )
 
-                Spacer(
-                    modifier =
-                        Modifier.height(2.dp)
-                )
+                Spacer(modifier = Modifier.height(2.dp))
             }
 
-
-            // =================================================
-            // QUESTION 1
-            // =================================================
-
             item {
-
-                val qText =
-                    stringResource(
-                        R.string.q_prevent_diseases
-                    )
-
                 AdvisorQuestionCard(
-                    question = qText,
-
+                    question = q1,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question = qText
-
+                        question = q1
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // QUESTION 2
-            // =================================================
-
             item {
-
-                val qText =
-                    stringResource(
-                        R.string.q_yellow_leaves
-                    )
-
                 AdvisorQuestionCard(
-                    question = qText,
-
+                    question = q2,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question = qText
-
+                        question = q2
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // QUESTION 3
-            // =================================================
-
             item {
-
-                val qText =
-                    stringResource(
-                        R.string.q_water_crop
-                    )
-
                 AdvisorQuestionCard(
-                    question = qText,
-
+                    question = q3,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question = qText
-
+                        question = q3
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // QUESTION 4
-            // =================================================
-
             item {
-
-                val qText =
-                    stringResource(
-                        R.string.q_improve_growth
-                    )
-
                 AdvisorQuestionCard(
-                    question = qText,
-
+                    question = q4,
                     orange = orange,
-
                     darkGreen = darkGreen,
-
                     onClick = {
-
-                        question = qText
-
+                        question = q4
                         advice = null
                     }
                 )
             }
 
-
-            // =================================================
-            // ASK YOUR OWN QUESTION
-            // =================================================
-
             item {
-
-                Spacer(
-                    modifier =
-                        Modifier.height(10.dp)
-                )
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Surface(
-                    modifier =
-                        Modifier.fillMaxWidth(),
-
-                    shape =
-                        RoundedCornerShape(24.dp),
-
-                    color =
-                        Color.White,
-
-                    tonalElevation =
-                        2.dp
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(24.dp),
+                    color = Color.White,
+                    tonalElevation = 2.dp
                 ) {
+                    Column(modifier = Modifier.padding(20.dp)) {
+                        Text(
+                            text = stringResource(R.string.ask_own_question),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = darkGreen
+                        )
 
-                    Column(
-                        modifier =
-                            Modifier.padding(20.dp)
-                    ) {
+                        Spacer(modifier = Modifier.height(6.dp))
 
                         Text(
-                            text = stringResource(
-                                R.string.ask_own_question
-                            ),
-
-                            style =
-                                MaterialTheme.typography.titleLarge,
-
-                            fontWeight =
-                                FontWeight.Bold,
-
-                            color =
-                                darkGreen
+                            text = stringResource(R.string.ask_question_desc),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = grayText
                         )
 
-                        Spacer(
-                            modifier =
-                                Modifier.height(6.dp)
-                        )
-
-                        Text(
-                            text = stringResource(
-                                R.string.ask_own_question_desc
-                            ),
-
-                            style =
-                                MaterialTheme.typography.bodyMedium,
-
-                            color =
-                                grayText
-                        )
-
-                        Spacer(
-                            modifier =
-                                Modifier.height(14.dp)
-                        )
-
-
-                        // -------------------------------------------------
-                        // TEXT BOX
-                        // -------------------------------------------------
+                        Spacer(modifier = Modifier.height(14.dp))
 
                         OutlinedTextField(
-
-                            value =
-                                question,
-
+                            value = question,
                             onValueChange = {
-
                                 question = it
-
-                                // Clear old answer when user edits question
                                 advice = null
                             },
-
-                            modifier =
-                                Modifier.fillMaxWidth(),
-
+                            modifier = Modifier.fillMaxWidth(),
                             minLines = 3,
-
                             maxLines = 5,
-
-                            shape =
-                                RoundedCornerShape(18.dp),
-
+                            shape = RoundedCornerShape(18.dp),
                             placeholder = {
-
-                                Text(
-                                    text = stringResource(
-                                        R.string.type_message_placeholder
-                                    )
-                                )
+                                Text(text = stringResource(R.string.type_message_placeholder))
                             },
-
                             singleLine = false,
-
                             enabled = !isLoading
                         )
 
-
-                        Spacer(
-                            modifier =
-                                Modifier.height(14.dp)
-                        )
-
-
-                        // -------------------------------------------------
-                        // GET ADVICE BUTTON
-                        // -------------------------------------------------
+                        Spacer(modifier = Modifier.height(14.dp))
 
                         Button(
-
                             onClick = {
-
-                                if (
-                                    question.trim().isNotEmpty() &&
-                                    !isLoading
-                                ) {
-
+                                if (question.trim().isNotEmpty() && !isLoading) {
                                     coroutineScope.launch {
-
                                         isLoading = true
-
                                         advice = null
-
-                                        advice =
-                                            GeminiService.getAdvice(
-                                                question.trim()
-                                            )
-
+                                        advice = GeminiService.getAdvice(question.trim())
                                         isLoading = false
                                     }
                                 }
                             },
-
-                            enabled =
-                                !isLoading &&
-                                        question.trim().isNotEmpty(),
-
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(58.dp),
-
-                            shape =
-                                RoundedCornerShape(18.dp),
-
-                            colors =
-                                ButtonDefaults.buttonColors(
-                                    containerColor =
-                                        orange,
-
-                                    contentColor =
-                                        Color.White
-                                )
+                            enabled = !isLoading && question.trim().isNotEmpty(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(58.dp),
+                            shape = RoundedCornerShape(18.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = orange,
+                                contentColor = Color.White
+                            )
                         ) {
-
                             Text(
-                                text =
-                                    if (isLoading) {
-                                        "Getting advice..."
-                                    } else {
-                                        stringResource(
-                                            R.string.get_advice_button
-                                        )
-                                    },
-
-                                style =
-                                    MaterialTheme.typography.titleMedium,
-
-                                fontWeight =
-                                    FontWeight.Bold
+                                text = if (isLoading) {
+                                    "Getting advice..."
+                                } else {
+                                    stringResource(R.string.get_advice)
+                                },
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
                 }
             }
-
-
-            // =================================================
-            // ADVICE RESULT
-            // =================================================
 
             if (advice != null) {
-
                 item {
-
                     Surface(
-                        modifier =
-                            Modifier.fillMaxWidth(),
-
-                        shape =
-                            RoundedCornerShape(22.dp),
-
-                        color =
-                            Color.White,
-
-                        tonalElevation =
-                            2.dp
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(22.dp),
+                        color = Color.White,
+                        tonalElevation = 2.dp
                     ) {
-
-                        Column(
-                            modifier =
-                                Modifier.padding(20.dp)
-                        ) {
-
+                        Column(modifier = Modifier.padding(20.dp)) {
                             Text(
-                                text =
-                                    stringResource(
-                                        R.string.advice_title
-                                    ),
-
-                                style =
-                                    MaterialTheme.typography.titleLarge,
-
-                                fontWeight =
-                                    FontWeight.Bold,
-
-                                color =
-                                    darkGreen
+                                text = stringResource(R.string.advice_result_title),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = darkGreen
                             )
 
-                            Spacer(
-                                modifier =
-                                    Modifier.height(10.dp)
-                            )
+                            Spacer(modifier = Modifier.height(10.dp))
 
                             Text(
-                                text =
-                                    advice!!,
-
-                                style =
-                                    MaterialTheme.typography.bodyLarge,
-
-                                color =
-                                    darkGreen
+                                text = advice!!,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = darkGreen
                             )
                         }
                     }
                 }
             }
 
-
-            // =================================================
-            // DISCLAIMER
-            // =================================================
-
             item {
-
-                Spacer(
-                    modifier =
-                        Modifier.height(6.dp)
-                )
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text =
-                        stringResource(
-                            R.string.advisor_disclaimer
-                        ),
-
-                    style =
-                        MaterialTheme.typography.bodyMedium,
-
-                    color =
-                        grayText
+                    text = stringResource(R.string.advisor_disclaimer),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = grayText
                 )
 
-                Spacer(
-                    modifier =
-                        Modifier.height(20.dp)
-                )
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
 }
-
-
-// ============================================================
-// SUGGESTED QUESTION CARD
-// ============================================================
 
 @Composable
 fun AdvisorQuestionCard(
@@ -681,93 +334,48 @@ fun AdvisorQuestionCard(
     darkGreen: Color,
     onClick: () -> Unit
 ) {
-
     Surface(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onClick()
-                },
-
-        shape =
-            RoundedCornerShape(20.dp),
-
-        color =
-            Color.White,
-
-        tonalElevation =
-            1.dp
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        shape = RoundedCornerShape(20.dp),
+        color = Color.White,
+        tonalElevation = 1.dp
     ) {
-
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-
-            verticalAlignment =
-                Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-
             Box(
-                modifier =
-                    Modifier
-                        .size(52.dp)
-                        .clip(
-                            RoundedCornerShape(16.dp)
-                        )
-                        .background(
-                            Color(0xFFF3E5DB)
-                        ),
-
-                contentAlignment =
-                    Alignment.Center
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color(0xFFF3E5DB)),
+                contentAlignment = Alignment.Center
             ) {
-
                 Text(
-                    text =
-                        "✦",
-
-                    color =
-                        orange,
-
-                    fontWeight =
-                        FontWeight.Bold,
-
-                    style =
-                        MaterialTheme.typography.titleLarge
+                    text = "✦",
+                    color = orange,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
 
-            Spacer(
-                modifier =
-                    Modifier.size(14.dp)
+            Spacer(modifier = Modifier.size(14.dp))
+
+            Text(
+                text = question,
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyLarge,
+                color = darkGreen
             )
 
             Text(
-                text =
-                    question,
-
-                modifier =
-                    Modifier.weight(1f),
-
-                style =
-                    MaterialTheme.typography.bodyLarge,
-
-                color =
-                    darkGreen
-            )
-
-            Text(
-                text =
-                    "›",
-
-                style =
-                    MaterialTheme.typography.headlineSmall,
-
-                color =
-                    orange
+                text = "›",
+                style = MaterialTheme.typography.headlineSmall,
+                color = orange
             )
         }
     }
